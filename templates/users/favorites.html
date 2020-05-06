@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if not favs %}
+<div class="text-center alert alert-warning my-5">Favorites empty!</div>
+{% endif %}
+<div class="d-flex justify-content-center my-3">    
+    <div class="row">
+{% for res in favs %}
+<div class="col">
+    <div class="card my-3" style="max-width: 18rem;" id="card">
+        <img src="{{res.restaurant.image_url}}"  class="card-img-top" alt="...">
+        <div class="card-img-overlay d-flex flex-row justify-content-end">
+            <a href="" data-id="{{res.restaurant.id}}" id="fav-id" class="fas fa-heart" style="color:red; font-size: 2em; text-decoration: none;" ></a>
+        </div>
+        <div class="card-body">
+        <h5 class="card-title">{{res.restaurant.name}}</h5>
+        <p class="card-text">Rating: {{res.restaurant.rating}}</p>
+        <!-- <p class="card-text">Contact: {{res.restaurant.phone}}</p> -->
+        <p class="card-text">{{res.restaurant.price}}</p>
+        <!-- <p class="card-text">Reviews: {{res.restaurant.reviews}}</p> -->
+        <i class="fa fa-yelp" style="color:red" aria-hidden="true"></i>
+        <a href="{{res.restaurant.url}}" class="card-link text-danger">More Info</a>
+        <a href="#" class="card-link text-danger">Get Directions</a>
+        </div>
+      </div>   
+</div>
+{%endfor%}
+</div>
+    </div>
+
+
+{% endblock %}

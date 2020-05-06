@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="results-section text-center my-3">
+   
+
+    <div class=" d-flex justify-content-center my-3">
+        {% for resp in response %}
+        <div class="card" style="width: 18rem;">
+            <img src="{{resp['image_url']}}" class="card-img-top" alt="...">
+            <div class="card-body">
+            <h5 class="card-title">{{resp['name']}}</h5>
+            <p class="card-text">Rating: {{resp['rating']}}</p>
+            <p class="card-text">Contact: {{resp['phone']}}</p>
+            <p class="card-text">{{resp['price']}}</p>
+            <p class="card-text">Reviews: {{resp['review_count']}}</p>
+            <i class="fa fa-yelp" style="color:red" aria-hidden="true"></i>
+            <a href="{{resp['url']}}" class="card-link text-danger">More Info</a>
+            <a href="#" class="card-link text-danger">Get Directions</a>
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <form action="">
+        <a href="{{ url_for('lucky_spin') }}" class="btn btn-outline-danger">Spin Again</a>
+        <a href="/" class="btn btn-outline-danger">Home Page</a>
+      
+    </form>
+
+
+</div>
+
+
+{% endblock %}
