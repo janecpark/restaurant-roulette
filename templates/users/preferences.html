@@ -1,11 +1,15 @@
 {% extends 'base.html'%}
 {% block content %}
 
-<form action="{{ url_for('set_pref')}}" class="my-3", method='POST'>
+
+<div class="container text-center mt-5">
+<form action="{{ url_for('set_pref')}}" class="my-3 ", method='POST'>
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-xl-4 shadow rounded p-3">
   <div class="form-group">
     <label for="cuisine">Cuisine</label>
-    <select class="form-control" name="cuisine">
-      <!-- <option id="">None</option> -->
+    <select class="form-control cuisine" name="cuisine">
+      <option value="restaurant">Any</option>
       <option value="italian">Italian</option>
       <option value="japanese">Japanese</option>
       <option value="newamerican">American</option>
@@ -15,7 +19,8 @@
   </div>
   <div class="form-group">
     <label for="price">Price</label>
-    <select class="form-control" name="price">
+    <select class="form-control price" name="price">
+      <option value="">Any</option>
       <option value=1>$</option>
       <option value=2>$$</option>
       <option value=3>$$$</option>
@@ -24,15 +29,20 @@
   </div>
   <div class="form-group">
     <label for="distance">Distance</label>
-    <select class="form-control" name="distance">
+    <select class="form-control distance" name="distance">
+      <option value="">Any</option>
       <option value=482>0.3 mile</option>
       <option value=1609>1 mile</option i>
       <option value=8046>5 miles</option>
       <option value=32100>20 miles</option>
     </select>
   </div>
-  <input type="submit" class="btn btn-outline-danger" value='Submit'></buttion>
+  <input type="submit" class="btn btn-block" id="pref" value='Submit'></button>
+</div>
+</div>
 </form>
+<a href="/" class="btn"> Back</a>
+</div>
 
 {% endblock %}
 

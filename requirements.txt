@@ -8,6 +8,8 @@ Flask==1.1.2
 Flask-Bcrypt==0.7.1
 Flask-SQLAlchemy==2.4.1
 Flask-WTF==0.14.3
+future==0.18.2
+geographiclib==1.50
 gunicorn==20.0.4
 idna==2.9
 infinity==1.4
@@ -17,6 +19,7 @@ Jinja2==2.11.2
 MarkupSafe==1.1.1
 psycopg2-binary==2.8.5
 pycparser==2.20
+ratelim==0.1.6
 requests==2.23.0
 six==1.14.0
 SQLAlchemy==1.3.16

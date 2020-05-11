@@ -13,6 +13,7 @@ class User(db.Model):
     username = db.Column(db.Text, nullable=False, unique=True)
     password = db.Column(db.Text, nullable=False)
     email = db.Column(db.Text, nullable=False)
+  
 
     def __repr__(self):
         return f'<User #{self.id}: {self.username}, {self.email}>'
@@ -52,31 +53,27 @@ class Restaurant(db.Model):
 
     __tablename__= ('restaurants')
 
-    id = db.Column(db.String, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.Text, nullable=False)
     rating = db.Column(db.Float, nullable=False)
     price_range = db.Column(db.String, nullable=False)
-    cuisine_id = db.Column(db.Text, nullable=False)
     url = db.Column(db.String, nullable=False)
     image_url = db.Column(db.String, nullable=False)
+    yelp_id = db.Column(db.String, nullable=False)
+    rev_num = db.Column(db.Integer, nullable=True)
+    phone = db.Column(db.String, nullable=True)
 
     user = db.relationship('User', secondary= 'favorites', backref='restaurants')
-# class Cuisine(db.Model):
-#     """Cuisine information"""
     
-#     __tablename__=('cuisines')
-
-#     id = db.Column(db.Text, primary_key=True)
-
-#     restaurants = db.relationship('Restaurant', backref='cuisines')
 
 class Favorite(db.Model):
     """Favorites table"""
 
     __tablename__=('favorites')
 
-    # id = db.Column(db.Integer, primary_key=True)
-    restaurant_id = db.Column(db.String, db.ForeignKey('restaurants.id'), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    rest_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'))
+    rest_name = db.Column(db.Text)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     users = db.relationship('User', backref="favorites")

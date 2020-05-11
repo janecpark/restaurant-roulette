@@ -1,20 +1,56 @@
 {% extends 'base.html' %}
+{% block title%} Restaurant Roulette {% endblock %}
 {% block content %}
 
-<div class="jumbotron jumbotron-fluid my-3">
+<!-- <div class="jumbotron jumbotron-fluid my-3">
     <div class="container">
-      <h1 class="display-4">Need help deciding where to eat?</h1>
+      <h1 class="display-6">Need help deciding where to eat?</h1>
       <p class="lead"></p>
     </div>
+  </div> -->
+  <div class="title container">
+    <h2 class="display-4 text-center "> Can't decide where to eat? </h2>
   </div>
 
-<div class="container my-5">
-    <form action="{{ url_for('lucky_spin')}}">
-        <button class="btn btn-outline-danger spin" data-id="nopref" type='submit'>Quick Spin</button>
-        <a class="btn btn-outline-danger" href="{{ url_for('set_pref') }}">Set preferences</a>
-    </form>
-</div>
 
 
+<div class="results-section d-flex justify-content-center"></div>
+  <div class="roulette container">
+      <p class="fas fa-sort-down fa-5x" id="arrow"></p><br>
+      <img src="static/images/wheel.png" class="wheel" style="max-width:400px;"><br><br>
+      <button class="btn" id="btn-spin">Spin</button>
+      
+      <div class=" my-4 buttons">
+          <!-- <button class="btn btn-outline-danger spin" data-id="nopref" type='submit'>Quick Spin</button> -->
+          <a class="btn ml-2"  href="{{ url_for('set_pref') }}">Set preferences</a><br><br>
+          <button class="btn" id="getNearby">Make your own list</button>
+        </div>
+      </div>
+    </div>
+
+  
+
+    <div class="nearbyRes container">
+      <div class="d-flex justify-content-center my-3">    
+        <div class="row results">
+        </div>
+      </div>
+        <div class="btn saveBtn ">Done</div>
+        </div>
+
+
+
+<!-- 
+<form action="/loc" method='POST'>
+  <input type="text" name="location">
+  <button>Submit</button>
+</form> -->
+<!-- <form action="">
+<fieldset class="container mt-4">
+  <legend>Address Autocomplete</legend>  
+      <label for="city">City </label>
+      <input type="text" class="form-control" id="city">
+</fieldset>
+</form> -->
 
 {% endblock %}

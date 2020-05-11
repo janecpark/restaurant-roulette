@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>Hello</h3>
+
+
+    <div class="d-flex justify-content-center my-3">    
+        <div class="row results">
+            {% for res in response%}
+            <div class="col-3 d-flex align-items-stretch">
+              <div class="card nearCard shadow mt-3" style="width: 18rem;">
+                <img src="{{res['image_url']}}" class="card-img-top" alt="..." id="img_url">
+                  <div class="card-img-overlay d-flex flex-row justify-content-end">
+                    <i id="near-id" class="fas fa-plus" style="color:white; font-size: 2em; text-decoration: none;" ></i>
+                  </div>
+                <div class="card-body">
+              <h5 class="card-title">{{res['name']}}</h5>
+              <p class="card-text">{{ res['price']}} </p>
+            </div>
+          </div>
+        </div>
+    {% endfor %}
+    </div>
+
+
+{% endblock %}

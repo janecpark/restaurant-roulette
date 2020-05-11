@@ -2,32 +2,69 @@
 {% block content %}
 
 
-<div class=" d-flex justify-content-center my-3">
-    {% for resp in response %}
-    <div class="card" style="max-width: 18rem;" id="card">
-        <img src="{{resp['image_url']}}" class="card-img-top" alt="...">
+<div class=" d-flex justify-content-center my-3 resultsDiv">
+  {% if response %}  
+  {% for resp in response %} 
+     <div class="card shadow" style="width: 18rem;" id="card">
+        <img src="{{resp['image_url']}}" class="card-img-top" alt="Not Found" onerror=this.src='/static/images/yelp.png'>
         <div class="card-img-overlay d-flex flex-row justify-content-end">
+          {% if (resp['name'] != favres.rest_name) and (g.user) %}
           <form action="", method="POST">
-            <a href="/user/add_fav" data-id="{{resp['id']}}" id="fav-id" class="far fa-heart" style="color:white; font-size: 2em; text-decoration: none;" ></a>
-          </form>
+            <a href="/user/add_fav/" data-id="{{resp['name']}}" id="res-id" class="far fa-heart" style="color:white; font-size: 2em; text-decoration: none;" ></a>
+          </form> 
+          {% elif (resp['name'] == favres.rest_name) and (g.user) %}  
+  
+          <form action="", method="">
+            <a href="" data-id="{{resp['name']}}" id="res-id" class="fas fa-heart" style="color:white; font-size: 2em; text-decoration: none;" ></a>
+          </form> 
+          {%endif%}
+
         </div>
         <div class="card-body">
         <h5 class="card-title">{{resp['name']}}</h5>
-        <p class="card-text">Rating: {{resp['rating']}}</p>
-        <p class="card-text">Contact: {{resp['phone']}}</p>
+        {% if resp['rating'] == 0 %}
+        <img src="/static/images/yelp_stars/web_and_ios/small/small_0.png" alt="">
+        {% elif resp['rating'] == 1 %}
+        <img src="/static/images/yelp_stars/web_and_ios/small/small_1.png" alt="">
+        {% elif resp[rating] == 1.5 %}
+        <img src="/static/images/yelp_stars/web_and_ios/small/small_1_half.png" alt=""> 
+        {% elif resp['rating'] == 2 %}
+        <img src="/static/images/yelp_stars/web_and_ios/small/small_2.png" alt=""> 
+        {% elif resp['rating'] == 2.5 %}
+        <img src="/static/images/yelp_stars/web_and_ios/small/small_2_half.png" alt="">
+        {% elif resp['rating'] == 3%}
+        <img src="/static/images/yelp_stars/web_and_ios/small/small_3.png" alt="">
+        {% elif resp['rating'] == 3.5 %}
+        <img src="/static/images/yelp_stars/web_and_ios/small/small_3_half.png" alt="">
+        {% elif resp['rating'] == 4 %}
+        <img src="/static/images/yelp_stars/web_and_ios/small/small_4.png" alt="">
+        {% elif resp['rating'] == 4.5 %}
+        <img src="/static/images/yelp_stars/web_and_ios/small/small_4_half.png" alt="">
+        {% else %}
+        <img src="/static/images/yelp_stars/web_and_ios/small/small_5.png" alt="">
+        {% endif %}
+        <p class="card-text">{{resp['rev_num']}} reviews </p>
+          <svg class="bi bi-phone" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M11 1H5a1 1 0 00-1 1v12a1 1 0 001 1h6a1 1 0 001-1V2a1 1 0 00-1-1zM5 0a2 2 0 00-2 2v12a2 2 0 002 2h6a2 2 0 002-2V2a2 2 0 00-2-2H5z" clip-rule="evenodd"/>
+            <path fill-rule="evenodd" d="M8 14a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
+          </svg>
+          {{ resp['phone']}}</p></span>
         <p class="card-text">{{resp['price']}}</p>
-        <p class="card-text">Reviews: {{resp['review_count']}}</p>
         <i class="fa fa-yelp" style="color:red" aria-hidden="true"></i>
         <a href="{{resp['url']}}" class="card-link text-danger">More Info</a>
-        <a href="#" class="card-link text-danger">Get Directions</a>
+        <p class="card-text"><small class="text">Powered by Yelp</small></p>
         </div>
-      </div>   
+      </div>    
       {%endfor%}
+
+     
+      {% else %}
+      <div class="alert alert-warning">No results</div>
+      {%endif%}
     </div>
 
       <form action=""class="d-flex justify-content-center mb-3" >
-        <a href="{{ url_for('lucky_spin') }}" class="btn btn-outline-danger">Spin</a>
-        <a href="{{ url_for('set_pref')}}" class="btn btn-outline-danger ml-1">Back</a>
+        <a href="{{ url_for('set_pref')}}" class="btn ml-1">Back</a>
       </form>
      
 
