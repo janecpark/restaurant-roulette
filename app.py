@@ -19,7 +19,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = (
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "it's a secret")
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "secret1")
 
 connect_db(app)
 db.create_all()
@@ -84,12 +84,13 @@ def add_to_session(response):
     session['id'] = response[0]['id']
     session['name'] = response[0]['name']
     session['rating'] = response[0]['rating']
-    session['price_range'] = response[0]['price']
+    session['price_range'] = 'N/A' or response[0]['price'] 
     session['image_url'] = response[0]['image_url'] 
     session['url'] = response[0]['url']
     session['phone'] = response[0]['phone']
     session['rev_num'] = response[0]['review_count']
-
+ 
+    
 def pop_session():
     session.pop('name')
     session.pop('id')
