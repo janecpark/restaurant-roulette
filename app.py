@@ -4,6 +4,7 @@ from models import db, connect_db, User, Restaurant, Favorite
 from form import UserForm, LoginForm
 from sqlalchemy.exc import IntegrityError
 from yelpAPI import get_my_key, token
+from boto.s3.connection import S3Connection
 import requests
 import json
 import random
@@ -20,7 +21,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = (
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "secret1")
-
+s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
 connect_db(app)
 db.create_all()
 
