@@ -363,7 +363,7 @@ def do_logout():
 
 
 
-@app.route('/')
+@app.route('/', methods=["GET"])
 def home_page():
     """Show homepage"""
   
