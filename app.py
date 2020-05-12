@@ -4,7 +4,7 @@ from models import db, connect_db, User, Restaurant, Favorite
 from form import UserForm, LoginForm
 from sqlalchemy.exc import IntegrityError
 from yelpAPI import get_my_key, token
-from boto.s3.connection import S3Connection
+from dotenv import load_dotenv
 import requests
 import json
 import random
@@ -14,20 +14,20 @@ CURR_USER_KEY = 'curr_user'
 
 
 app = Flask(__name__)
-
 app.config['SQLALCHEMY_DATABASE_URI'] = (
     os.environ.get('DATABASE_URL', 'postgres:///restaurant'))
-
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "secret1")
-s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', "secret1")
+API_KEY = os.getenv('API_KEY')
+token = os.getenv('token')
+
 connect_db(app)
 db.create_all()
+load_dotenv()
 
 BASE_URL ='https://api.yelp.com/v3/businesses/search'
 LOCATION_URL = "https://us1.locationiq.com/v1/search.php"
-
 
 
 def get_result(num):
@@ -35,7 +35,7 @@ def get_result(num):
         pop_session()
 
         
-    HEADERS = {'Authorization': f'bearer {get_my_key}'}
+    HEADERS = {'Authorization': f'bearer {API_KEY}'}
     payload = {}
 
     PARAMS = {'term': 'restaurant',
@@ -59,7 +59,7 @@ def get_result_pref(cuisine,price,distance):
     if 'name' in session:
         pop_session()
       
-    HEADERS = {'Authorization': f'bearer {get_my_key}'}
+    HEADERS = {'Authorization': f'bearer {API_KEY}'}
     payload = {}
 
     PARAMS = {'term': 'restaurant',
@@ -363,16 +363,16 @@ def do_logout():
 
 
 
-@app.route('/', methods=['GET'])
+@app.route('/')
 def home_page():
     """Show homepage"""
   
-    # ip_request = requests.get('https://get.geojs.io/v1/ip.json')
-    # my_ip = ip_request.json()['ip']
-    # geo_request = requests.get('https://get.geojs.io/v1/ip/geo/' +my_ip + '.json')
-    # geo_data = geo_request.json()
-    # session['latitude'] = geo_data['latitude']
-    # session['longitude'] = geo_data['longitude']
+    ip_request = requests.get('https://get.geojs.io/v1/ip.json')
+    my_ip = ip_request.json()['ip']
+    geo_request = requests.get('https://get.geojs.io/v1/ip/geo/' +my_ip + '.json')
+    geo_data = geo_request.json()
+    session['latitude'] = geo_data['latitude']
+    session['longitude'] = geo_data['longitude']
 
     return render_template('homepage.html')
    
