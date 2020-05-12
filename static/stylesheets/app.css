@@ -127,6 +127,7 @@
     background-position: center;
     background-attachment: fixed;
     font-family: 'Montserrat', sans-serif;
+    background-size:100%;
   }
 
 
@@ -218,8 +219,6 @@
     background: #999;
 }
 
-@media screen and (max-width: 480px) {
-  body{
-       font-size:80%;
-  }
+#header{
+  font-size: 5.9vw;
 }
