@@ -367,12 +367,12 @@ def do_logout():
 def home_page():
     """Show homepage"""
   
-    ip_request = requests.get('https://get.geojs.io/v1/ip.json')
-    my_ip = ip_request.json()['ip']
-    geo_request = requests.get('https://get.geojs.io/v1/ip/geo/' +my_ip + '.json')
-    geo_data = geo_request.json()
-    session['latitude'] = geo_data['latitude']
-    session['longitude'] = geo_data['longitude']
+    # ip_request = requests.get('https://get.geojs.io/v1/ip.json')
+    # my_ip = ip_request.json()['ip']
+    # geo_request = requests.get('https://get.geojs.io/v1/ip/geo/' +my_ip + '.json')
+    # geo_data = geo_request.json()
+    # session['latitude'] = geo_data['latitude']
+    # session['longitude'] = geo_data['longitude']
 
     return render_template('homepage.html')
    
