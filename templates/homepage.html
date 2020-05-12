@@ -2,12 +2,6 @@
 {% block title%} Restaurant Roulette {% endblock %}
 {% block content %}
 
-<!-- <div class="jumbotron jumbotron-fluid my-3">
-    <div class="container">
-      <h1 class="display-6">Need help deciding where to eat?</h1>
-      <p class="lead"></p>
-    </div>
-  </div> -->
   <div class="title container">
     <h2 class="display-4 text-center" id="header" "> Can't decide where to eat? </h2>
   </div>
@@ -21,7 +15,6 @@
       <button class="btn" id="btn-spin">Spin</button>
       
       <div class=" my-4 buttons">
-          <!-- <button class="btn btn-outline-danger spin" data-id="nopref" type='submit'>Quick Spin</button> -->
           <a class="btn ml-2"  href="{{ url_for('set_pref') }}">Set preferences</a><br><br>
           <button class="btn" id="getNearby">Make your own list</button>
         </div>
@@ -34,9 +27,11 @@
       <div class="d-flex justify-content-center my-3">    
         <div class="row results">
         </div>
+        
       </div>
-      <div class="btn saveBtn ">Done</div>
-    </div>
+      <div class="btn-area text-center mb-3"></div>
+      <!-- <div class="btn saveBtn ">Done</div>
+    </div> -->
 
 
 

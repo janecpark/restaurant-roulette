@@ -1,5 +1,5 @@
-// const BASE_URL ='http://127.0.0.1:5000'
-const BASE_URL = 'https://restaurant-roulette-v1.herokuapp.com/'
+const BASE_URL ='http://127.0.0.1:5000'
+// const BASE_URL = 'https://restaurant-roulette-v1.herokuapp.com/'
 let savedRes = []
 let clickedID = []
 let username = []
@@ -122,7 +122,6 @@ async function removeFav(res_id){
 
 $('.buttons').on('click', '#getNearby', async function(evt){
     evt.preventDefault()
-    $('.saveBtn').show()
     let resp = await axios.get(`${BASE_URL}/nearbyRes`)
     for(let res of resp.data){
         let result = $(nearbyHTML(res))
@@ -138,10 +137,11 @@ $('.buttons').on('click', '#getNearby', async function(evt){
             url: res.url
         })
     }
-    
+    $('.btn-area').append('<div class="btn saveBtn">Done</div>')
     $('.title').hide()
     $('.roulette').hide()
     $('.buttons').hide()
+    $('.nearbyRes').prepend('<h5 class="display-4 text-center" style="font-size: 4.9vw;">Choose at least 2 restaurants</h2>')
 })
 
 
@@ -149,13 +149,21 @@ $('.nearbyRes').on('click', '.nearCard', function(evt){
     evt.preventDefault()
     $(this).toggleClass('saved')
     let id = $(this).find('#res_id').attr('data-id')
-    clickedID.push(id)
-
+    if(clickedID.includes(id)){
+        clickedID.pop(id)
+    }else{
+        clickedID.push(id)
+    }
 })
 
 function getRandomID(ID){
-    let ranInd = Math.ceil(Math.random() * ID.length-1)
-    return ranInd
+    if(ID.length >= 2){
+        let ranInd = Math.ceil(Math.random() * ID.length-1)
+        return ranInd
+    }else{
+        let alert = '<div class="alert alert-danger" role="alert">Choose at least 2 restaurants!</div>'
+        return $('.nearbyRes').append(alert)
+    }
 }
 
 
@@ -226,7 +234,6 @@ $('.roulette').on('click', "#btn-spin", async function(evt){
     }
     await getUser()
     if(username.length > 0){
-
         await getFav()
     }
  
@@ -330,7 +337,6 @@ function nearbyHTML(resp){
     
     `
 }
-
    
 function randomPicked(resp){
     let res = resp.rating
@@ -351,6 +357,7 @@ function randomPicked(resp){
         <i class="fa fa-yelp" style="color:red" aria-hidden="true"></i>
         <a href="${resp.url}" class="card-link text-danger">More Info</a>
         <p class="card-text"><small class="text">Powered by Yelp</small></p>
+        <a href="/"class="btn">Back</a>
       </div>
     </div>
     `
