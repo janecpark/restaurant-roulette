@@ -11,7 +11,6 @@ import random
 
 CURR_USER_KEY = 'curr_user'
 
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = (
     os.environ.get('DATABASE_URL', 'postgres:///restaurant'))
@@ -155,9 +154,7 @@ def set_pref():
         price = random.randint(1,4)
     if not distance:
         distance = random.randint(482, 32100)
-    print(cuisine)
-    print(price)
-    print(distance)
+    
     if cuisine:
         response = get_result_pref(cuisine,price,distance)
         if response and g.user:
@@ -223,12 +220,10 @@ def add_user_fav():
             phone = phone
         )
 
-
         db.session.add(res)
         db.session.commit()
 
         rest = Restaurant.query.filter_by(name=name).one()
-    
         
         fav = Favorite(
             user_id = g.user.id,
@@ -341,6 +336,14 @@ def logout():
     flash("Log Out Successful", 'success')
     return redirect('/')
 
+@app.route('/location', methods=["GET", "POST"])
+def get_user_location():
+    data = request.get_json()
+    session['latitude'] = data['lat']
+    session['longitude'] = data['lon']
+    return jsonify(data)
+
+
 ######Log in and homepage########
 
 @app.before_request
@@ -368,12 +371,12 @@ def do_logout():
 def home_page():
     """Show homepage"""
   
-    ip_request = requests.get('https://get.geojs.io/v1/ip.json')
-    my_ip = ip_request.json()['ip']
-    geo_request = requests.get('https://get.geojs.io/v1/ip/geo/' +my_ip + '.json')
-    geo_data = geo_request.json()
-    session['latitude'] = geo_data['latitude']
-    session['longitude'] = geo_data['longitude']
+    # ip_request = requests.get('https://get.geojs.io/v1/ip.json')
+    # my_ip = ip_request.json()['ip']
+    # geo_request = requests.get('https://get.geojs.io/v1/ip/geo/' +my_ip + '.json')
+    # geo_data = geo_request.json()
+    # session['latitude'] = geo_data['latitude']
+    # session['longitude'] = geo_data['longitude']
 
     return render_template('homepage.html')
    

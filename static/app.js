@@ -6,13 +6,42 @@ let username = []
 let resInfo = {}
 let userFav = []
 
+
+
 function init(){
     savedRes = []
     clickedID = []
     username = []
     resInfo = {}
-    $('.saveBtn').hide()
-    getUser()
+    navigator.geolocation.getCurrentPosition(function(position){
+        let lat = position.coords.latitude;
+        let lon = position.coords.longitude
+        let location ={
+            'lat': lat,
+            'lon': lon
+        }
+        sendLoc(location)
+        console.log(location)
+    })
+        getUser()
+}
+
+async function sendLoc(location){
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    
+    let raw = JSON.stringify(location);
+    
+    let requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+    
+    fetch(`${BASE_URL}/location`, requestOptions)
+      .then(response => response.text())
+      .catch(error => console.log('error', error));
 }
 
 async function getUser(){
@@ -364,6 +393,7 @@ function randomPicked(resp){
 }
 
 init()
+
 
 
 
