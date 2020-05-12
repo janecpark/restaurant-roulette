@@ -358,35 +358,5 @@ function randomPicked(resp){
 init()
 
 
-// var places = require('places.js');
-var placesAutocomplete = places({
-    appId: 'pl10WLX6UF7N',
-    apiKey: 'e7ea7dc4535958f1de3218cfd66e91ba',
-    container: document.querySelector('#address-input')
-  });
 
-  placesAutocomplete.on('change', e => console.log(e.suggestion));
-const location_url='https://places-dsn.algolia.net'
-
-
-  (function() {
-    var placesAutocomplete = places({
-      appId: 'pl10WLX6UF7N',
-      apiKey: 'e7ea7dc4535958f1de3218cfd66e91ba',
-      container: document.querySelector('#city'),
-      templates: {
-        value: function(suggestion) {
-          return suggestion.name;
-        }
-      }
-    }).configure({
-      type: 'city'
-    //   aroundLatLngViaIP: false,
-    });
-
-    placesAutocomplete.on('change', function resultSelected(e){
-        document.querySelector('#city').value = e.suggestion.administrative || '';
-        
-    })
-})();
 

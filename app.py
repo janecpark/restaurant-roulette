@@ -3,7 +3,6 @@ from flask import Flask, render_template, request, flash, redirect, session, url
 from models import db, connect_db, User, Restaurant, Favorite
 from form import UserForm, LoginForm
 from sqlalchemy.exc import IntegrityError
-# from yelpAPI import get_my_key, token
 from dotenv import load_dotenv
 import requests
 import json
@@ -18,7 +17,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = (
     os.environ.get('DATABASE_URL', 'postgres:///restaurant'))
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', "secret1")
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "secret1")
+app.config['API_KEY'] = os.environ.get('API_KEY')
+app.config['token'] = os.environ.get('token')
 API_KEY = os.getenv('API_KEY')
 token = os.getenv('token')
 
