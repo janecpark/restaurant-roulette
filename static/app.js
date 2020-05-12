@@ -4,6 +4,7 @@ let clickedID = []
 let username = []
 let resInfo = {}
 let userFav = []
+require('dotenv').config();
 
 function init(){
     savedRes = []
