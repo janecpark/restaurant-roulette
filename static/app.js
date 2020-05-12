@@ -1,4 +1,5 @@
-const BASE_URL ='http://127.0.0.1:5000'
+// const BASE_URL ='http://127.0.0.1:5000'
+const BASE_URL = 'https://restaurant-roulette-v1.herokuapp.com/'
 let savedRes = []
 let clickedID = []
 let username = []
@@ -98,7 +99,7 @@ async function findID(res){
       redirect: 'follow'
     };
     
-    fetch(`http://127.0.0.1:5000/findID`, requestOptions)
+    fetch(`${BASE_URL}/findID`, requestOptions)
       .then(response => response.text())
       .catch(error => console.log('error', error));
 }
@@ -202,7 +203,7 @@ async function sendRes(res){
       redirect: 'follow'
     };
     
-    fetch(`http://127.0.0.1:5000/handleRes`, requestOptions)
+    fetch(`${BASE_URL}/handleRes`, requestOptions)
       .then(response => response.text())
       .catch(error => console.log('error', error));
 }
