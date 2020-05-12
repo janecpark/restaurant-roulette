@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, flash, redirect, session, url
 from models import db, connect_db, User, Restaurant, Favorite
 from form import UserForm, LoginForm
 from sqlalchemy.exc import IntegrityError
-from yelpAPI import get_my_key, token
+# from yelpAPI import get_my_key, token
 from dotenv import load_dotenv
 import requests
 import json
