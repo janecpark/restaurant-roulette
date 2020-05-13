@@ -21,20 +21,21 @@ app.config['API_KEY'] = os.environ.get('API_KEY')
 app.config['token'] = os.environ.get('token')
 API_KEY = os.getenv('API_KEY')
 token = os.getenv('token')
+MAP_KEY = os.getenv('MAP_KEY')
 
 connect_db(app)
 db.create_all()
 load_dotenv()
 
 BASE_URL ='https://api.yelp.com/v3/businesses/search'
-LOCATION_URL = "https://us1.locationiq.com/v1/search.php"
+LOCATION_URL = "http://www.mapquestapi.com/geocoding/v1/address"
 
 
 def get_result(num):
+    """Get API result"""
     if 'name' in session:
         pop_session()
 
-        
     HEADERS = {'Authorization': f'bearer {API_KEY}'}
     payload = {}
 
@@ -56,6 +57,7 @@ def get_result(num):
 
 
 def get_result_pref(cuisine,price,distance):
+    """Get API results with preferences"""
     if 'name' in session:
         pop_session()
       
@@ -104,6 +106,7 @@ def pop_session():
 
 @app.route('/spin', methods=['GET', 'POST'])
 def lucky_spin():
+    """Post and render response"""
 
     response = get_result(1)
     add_to_session(response)
@@ -111,13 +114,16 @@ def lucky_spin():
 
 @app.route('/nearbyRes', methods=["GET", "POST"])
 def nearby():
+    """Render response for nearby restaurants"""
     response = get_result(12)
     return jsonify(response)
     
 @app.route('/handleRes', methods=['POST'])        
 def handle_result():
+    """Route to handle result and add to session"""
     data = request.get_json()
     obj = json.loads(data)
+
     res_id = obj['id']
     name = obj['name']
     image_url = obj['image_url']
@@ -154,6 +160,7 @@ def set_pref():
         price = random.randint(1,4)
     if not distance:
         distance = random.randint(482, 32100)
+    print(cuisine,price,distance)
     
     if cuisine:
         response = get_result_pref(cuisine,price,distance)
@@ -163,7 +170,6 @@ def set_pref():
             user = User.query.get_or_404(g.user.id)
          
             favres = Favorite.query.filter(Favorite.rest_name == name).filter(Favorite.user_id == user.id).first()
-
         else:
             favres = None
     
@@ -189,7 +195,6 @@ def add_user_fav():
     phone = session['phone']
     rev_num = session['rev_num']
     user = g.user
-    print(name)
 
     result = {"name": name, 
               "rating": rating, 
@@ -200,7 +205,6 @@ def add_user_fav():
 
     res_data = Restaurant.query.filter(Restaurant.yelp_id==yelp_id).first()
     all_res = Restaurant.query.all()
-    
         
     if res_data in all_res:
         fav = Favorite(rest_id=res_data.id, user_id=g.user.id, rest_name=res_data.name)
@@ -229,20 +233,16 @@ def add_user_fav():
             user_id = g.user.id,
             rest_id = rest.id,
             rest_name = name
-            
         )
       
         db.session.add(fav)
         db.session.commit()   
-
         return jsonify(result)
-
 
 @app.route('/users/favorites/<int:user_id>')
 def show_fav(user_id):
     """Show list of favorite restaurants"""
     user = User.query.get_or_404(user_id)
-
     return render_template('/users/favorites.html', user=user, favs=user.favorites)
 
 @app.route('/fav/delete/<int:res_id>', methods=["POST"])
@@ -255,7 +255,7 @@ def delete_fav(res_id):
 
 @app.route('/getfav', methods=['GET', 'POST'])
 def get_fav():
-    
+    """Get a list of user's favorites"""
     favres = db.session.query(Restaurant).join(Favorite, Favorite.rest_id == Restaurant.id).filter(Favorite.user_id == g.user.id).all()
     serialized = [serialize_fav(f) for f in favres]
 
@@ -265,8 +265,10 @@ def serialize_fav(item):
     return{
             "name": item.name
         }
+
 @app.route('/findID', methods=['GET', "POST"])
 def find_and_delete():
+    """Find restaurant using name and remove from favorites"""
     data = request.get_json()
     toDelete = Restaurant.query.filter(Restaurant.name == data).one()
     delete = delete_fav(toDelete.id)
@@ -336,13 +338,36 @@ def logout():
     flash("Log Out Successful", 'success')
     return redirect('/')
 
+############User location #############
+
 @app.route('/location', methods=["GET", "POST"])
 def get_user_location():
+    """Get user's location and save to session"""
     data = request.get_json()
+    if 'latitude' in session:
+        session.pop('latitude')
+        session.pop('longitude')
     session['latitude'] = data['lat']
     session['longitude'] = data['lon']
     return jsonify(data)
 
+@app.route('/getloc/<string:address>', methods=["GET", "POST"])
+def get_location(address):
+    """Look up user's address input"""
+    url = f"http://www.mapquestapi.com/geocoding/v1/address?key={MAP_KEY}&location={address}"
+
+    payload = {}
+
+    response = requests.request("GET", url, data = payload)
+    data = response.json()
+    print(data)
+    lat = data['results'][0]['locations'][0]['latLng']['lat']
+    lon = data['results'][0]['locations'][0]['latLng']['lng']
+    result = {
+        'lat': lat,
+        'lon': lon
+    }
+    return jsonify(result)
 
 ######Log in and homepage########
 
@@ -367,20 +392,11 @@ def do_logout():
 
 
 
-@app.route('/', methods=["GET"])
+@app.route('/', methods=["GET", 'POST'])
 def home_page():
     """Show homepage"""
-  
-    # ip_request = requests.get('https://get.geojs.io/v1/ip.json')
-    # my_ip = ip_request.json()['ip']
-    # geo_request = requests.get('https://get.geojs.io/v1/ip/geo/' +my_ip + '.json')
-    # geo_data = geo_request.json()
-    # session['latitude'] = geo_data['latitude']
-    # session['longitude'] = geo_data['longitude']
-
     return render_template('homepage.html')
    
-
 @app.after_request
 def add_header(req):
     """Add non-caching headers on every request."""

@@ -6,7 +6,6 @@ let username = []
 let resInfo = {}
 let userFav = []
 
-//location function
 async function init(){
     savedRes = []
     clickedID = []
@@ -16,6 +15,7 @@ async function init(){
    
   let lat = localStorage.getItem('lat')
   let lon = localStorage.getItem('lon')
+  console.log(lat,lon)
     if(!lat && !lon){
         navigator.geolocation.getCurrentPosition(function(position){
             let lat = position.coords.latitude;
@@ -71,8 +71,6 @@ async function sendLoc(location){
       .catch(error => console.log('error', error));
 }
 
-
-
 async function getUser(){
     let user = await axios.get(`${BASE_URL}/checkuser`)
     if(user.data['Error']){
@@ -81,7 +79,6 @@ async function getUser(){
     }
 }   
 
-//Adding and removing favorites
 async function getFav(){
     userFav = []
     let fav = await axios.get(`${BASE_URL}/getfav`)
@@ -92,8 +89,8 @@ async function getFav(){
     }
 }
 
-
 $('.resultsDiv').on('click',"#res-id", async function(evt){
+// This click event allows users to click on the heart to add item to their favorites
     evt.preventDefault()
     await getFav()
     let name = $(this).attr('data-id')
@@ -108,7 +105,29 @@ $('.resultsDiv').on('click',"#res-id", async function(evt){
     }
 })
 
+function charToNum(char){
+    if(char == '$'){
+        return 1
+    }else if(char == '$$'){
+        return 2
+    }else if(char == '$$$'){
+        return 3
+    }else{
+        return 4
+    }
+}
 
+function numToChar(num){
+    if(num == 1){
+        return "$"
+    }else if(num == 2){
+        return "$$"
+    }else if(num == 3){
+        return "$$$"
+    }else{
+        return "$$$$"
+    }
+}
 
 $('.results-section').on('click',"#res-id", async function(evt){
         evt.preventDefault()
@@ -156,8 +175,6 @@ async function removeFav(res_id){
     let remove = await axios.post(`${BASE_URL}/fav/delete/${res_id}`)
 }
 
-// Getting a list of nearby restaurants and rendering a picked restaurant
-
 $('.buttons').on('click', '#getNearby', async function(evt){
     evt.preventDefault()
     let resp = await axios.get(`${BASE_URL}/nearbyRes`)
@@ -180,6 +197,7 @@ $('.buttons').on('click', '#getNearby', async function(evt){
     $('.roulette').hide()
     $('.buttons').hide()
     $('#user_location').hide()
+    // $('.nearbyRes').prepend('<div class="alert alert-light" role="alert">Choose at least 2 restaurants</div>')
     $('.nearbyRes').prepend('<h5 class="display-4 text-center nearTitle" style="font-size: 2.9vw;">Choose at least 2 restaurants</h2>')
 })
 
@@ -255,7 +273,6 @@ async function sendRes(res){
       .catch(error => console.log('error', error));
 }
 
-// Render a single result wwhen wheel is clicked
 
 $('.roulette').on('click', "#btn-spin", async function(evt){
     evt.preventDefault()
@@ -283,7 +300,6 @@ $('.roulette').on('click', "#btn-spin", async function(evt){
         $('.roulette').hide()
         $('.buttons').hide()
         $('.title').hide()
-        $('#user_location').hide()
         let htmlres = $(renderHTML(result))
         $('.results-section').append(htmlres)
         if(username.length == 0){
@@ -310,86 +326,6 @@ $('.results-section').on('click', '#near-id', async function(evt){
     }
 })
 
-//HTML functions 
-function charToNum(char){
-    if(char == '$'){
-        return 1
-    }else if(char == '$$'){
-        return 2
-    }else if(char == '$$$'){
-        return 3
-    }else{
-        return 4
-    }
-}
-
-function numToChar(num){
-    if(num == 1){
-        return "$"
-    }else if(num == 2){
-        return "$$"
-    }else if(num == 3){
-        return "$$$"
-    }else{
-        return "$$$$"
-    }
-}
-
-function rating(resp){
-    if(parseInt(resp) === resp){
-        let img=` <img src="/static/images/yelp_stars/web_and_ios/small/small_${resp}.png" alt=""> `
-        return img
-    }else{
-        let int = Math.trunc(resp)
-        let img=` <img src="/static/images/yelp_stars/web_and_ios/small/small_${int}_half.png" alt=""> `
-        return img
-    }
-}
-   
-function nearbyHTML(resp){
-    let res = resp.rating
-    let star = rating(res)
-    return `
-    <div class="col-lg-3 col-md-4 d-flex align-items-stretch">
-    <div class="card nearCard shadow mt-3" style="width: 18rem;">
-        <img src="${resp.image_url}" id="res_id" data-id="${resp.id}" class="card-img-top" alt="..." data-img="${resp.image_url}">
-        <div class="card-img-overlay d-flex flex-row justify-content-end">
-          <i id="near-id" data-id=${resp.name}class="fas fa-plus" style="color:white; font-size: 2em; text-decoration: none;" ></i>
-      </div>
-        <div class="card-body">
-        <h5 class="card-title" id="name" data-name=${resp.name}>${resp.name}</h5>
-        <p class="card-text" id='res' data-res=${res}>${res} ${star}</p>
-        <p class="card-text" id="rev" data-revcount=${resp.review_count} >${resp.review_count} reviews </p>
-        <p class="card-text" id="price" data-price=${resp.price} >${resp.price}</p>
-      </div>
-    </div>
-    </div>
-    
-    `
-}
-   
-function randomPicked(resp){
-    let res = resp.rating
-    let star = rating(res)
-    let price = numToChar(resp.price)
-    return `
-    <div class="card shadow mt-3" style="width: 18rem;">
-        <img src="${resp.image_url}" id="res_id" data-id="${resp.id}" class="card-img-top" alt="..." data-img="${resp.image_url}">
-        <div class="card-img-overlay d-flex flex-row justify-content-end">
-          <i id="res-id" data-resid="${resp.id}"data-id="${resp.name}"class="far fa-heart" style="color:white; font-size: 2em; text-decoration: none;" ></i>
-      </div>
-        <div class="card-body">
-        <h5 class="card-title" id="name" data-name=${resp.name}>${resp.name}</h5>
-        <p class="card-text" id='res' data-res=${res}>${res} ${star}</p>
-        <p class="card-text" id="rev" data-revcount=${resp.review_count} >${resp.review_count} reviews </p>
-        <p class="card-text" id="price" data-price=${resp.price} >${price}</p>
-        <i class="fa fa-yelp" style="color:red" aria-hidden="true"></i>
-        <a href="${resp.url}" class="card-link text-danger">More Info</a>
-        <p class="card-text"><small class="text">Powered by Yelp</small></p>
-      </div>
-      </div>
-    `
-}
 
 function renderHTML(resp){
     let res = resp[0].rating
@@ -418,12 +354,71 @@ function renderHTML(resp){
       </div>
     </div>
     <div class="row">
-    <div class="col my-3 d-flex justify-content-center">
+    <div class="col my-3 align-self-center">
     <a href="/" class="btn">Home Page</a>
+
     </div>
 `
 }
 
+    function rating(resp){
+        if(parseInt(resp) === resp){
+            let img=` <img src="/static/images/yelp_stars/web_and_ios/small/small_${resp}.png" alt=""> `
+            return img
+        }else{
+            let int = Math.trunc(resp)
+            let img=` <img src="/static/images/yelp_stars/web_and_ios/small/small_${int}_half.png" alt=""> `
+            return img
+        }
+    }
+
+   
+function nearbyHTML(resp){
+    let res = resp.rating
+    let star = rating(res)
+    return `
+    <div class="col-lg-3 col-md-4 d-flex align-items-stretch">
+    <div class="card nearCard shadow mt-3" style="width: 18rem;">
+        <img src="${resp.image_url}" id="res_id" data-id="${resp.id}" class="card-img-top" alt="..." data-img="${resp.image_url}">
+        <div class="card-img-overlay d-flex flex-row justify-content-end">
+          <i id="near-id" data-id=${resp.name}class="fas fa-plus" style="color:white; font-size: 2em; text-decoration: none;" ></i>
+      </div>
+        <div class="card-body">
+        <h5 class="card-title" id="name" data-name=${resp.name}>${resp.name}</h5>
+        <p class="card-text" id='res' data-res=${res}>${res} ${star}</p>
+        <p class="card-text" id="rev" data-revcount=${resp.review_count} >${resp.review_count} reviews </p>
+        <p class="card-text" id="price" data-price=${resp.price} >${resp.price}</p>
+      </div>
+    </div>
+    </div>
+    
+    `
+}
+   
+function randomPicked(resp){
+    let res = resp.rating
+    let star = rating(res)
+    let price = numToChar(resp.price)
+
+    return `
+    <div class="card shadow mt-3" style="width: 18rem;">
+        <img src="${resp.image_url}" id="res_id" data-id="${resp.id}" class="card-img-top" alt="..." data-img="${resp.image_url}">
+        <div class="card-img-overlay d-flex flex-row justify-content-end">
+          <i id="res-id" data-resid="${resp.id}"data-id="${resp.name}"class="far fa-heart" style="color:white; font-size: 2em; text-decoration: none;" ></i>
+      </div>
+        <div class="card-body">
+        <h5 class="card-title" id="name" data-name=${resp.name}>${resp.name}</h5>
+        <p class="card-text" id='res' data-res=${res}>${res} ${star}</p>
+        <p class="card-text" id="rev" data-revcount=${resp.review_count} >${resp.review_count} reviews </p>
+        <p class="card-text" id="price" data-price=${resp.price} >${price}</p>
+        <i class="fa fa-yelp" style="color:red" aria-hidden="true"></i>
+        <a href="${resp.url}" class="card-link text-danger">More Info</a>
+        <p class="card-text"><small class="text">Powered by Yelp</small></p>
+        <a href="/"class="btn">Back</a>
+      </div>
+    </div>
+    `
+}
 
 init()
 

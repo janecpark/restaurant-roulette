@@ -55,13 +55,13 @@ class Restaurant(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.Text, nullable=False)
-    rating = db.Column(db.Float, nullable=False)
-    price_range = db.Column(db.String, nullable=False)
+    rating = db.Column(db.Float, nullable=True)
+    price_range = db.Column(db.String, nullable=True, default= 'N/A')
     url = db.Column(db.String, nullable=False)
     image_url = db.Column(db.String, nullable=False)
     yelp_id = db.Column(db.String, nullable=False)
     rev_num = db.Column(db.Integer, nullable=True)
-    phone = db.Column(db.String, nullable=True)
+    phone = db.Column(db.String, nullable=True, default='N/A')
 
     user = db.relationship('User', secondary= 'favorites', backref='restaurants')
     

@@ -5,37 +5,32 @@
   <div class="title container">
     <h2 class="display-4 text-center" id="header" "> Can't decide where to eat? </h2>
   </div>
-
-
-
-<div class="results-section d-flex justify-content-center"></div>
-  <div class="roulette container">
-      <p class="fas fa-sort-down fa-5x" id="arrow"></p><br>
-      <img src="static/images/wheel.png" class="wheel" style="max-width:400px;"><br><br>
-      <button class="btn" id="btn-spin">Spin</button>
-      
-      <div class=" my-4 buttons">
-          <a class="btn ml-2"  href="{{ url_for('set_pref') }}">Set preferences</a><br><br>
-          <button class="btn" id="getNearby">Make your own list</button>
+  <div class="results-section d-flex justify-content-center"></div>
+    <div class="roulette container">
+        <p class="fas fa-sort-down fa-5x" id="arrow"></p><br>
+        <img src="static/images/wheel.png" class="wheel" style="max-width:400px;"><br><br>
+        <button class="btn" id="btn-spin">Spin</button>
+          <div class=" my-4 buttons">
+            <a class="btn ml-2"  href="{{ url_for('set_pref') }}">Set preferences</a><br><br>
+             <button class="btn" id="getNearby">Make your own list</button>
+          </div>
         </div>
       </div>
-    </div>
-
-  
-
-    <div class="nearbyRes container">
-      <div class="d-flex justify-content-center my-3">    
-        <div class="row results">
+      <div class="nearbyRes container">
+        <div class="d-flex justify-content-center my-3">    
+          <div class="row results">
+          </div>
         </div>
-        
-      </div>
       <div class="btn-area text-center mb-3"></div>
-      <!-- <div class="btn saveBtn ">Done</div>
-    </div> -->
-
-
-
-
+     <div id="messages" class="hide text-center" role="alert">
+    </div> 
+    <form action="" id="user_location" class="container form-group">
+      <div class="form-group">
+        <label for="city">Enter City or Zip Code</label>
+        <input type="text" name="address" id="city" class="form-control">
+      </div>
+      <button class="btn" type="submit">Submit</button>
+    </form>
 
 
 {% endblock %}

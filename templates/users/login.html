@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% block title %} Log In {% endblock %}
 {% block content %}
 
 <div class="row justify-content-md-center mt-5">
@@ -11,15 +12,13 @@
           {% for error in field.errors %}
             <span class="text-danger">{{ error }}</span>
           {% endfor %}
-          <div class="form-group">
-              {{ field(placeholder=field.label.text, class_="form-control") }}
-              
+             <div class="form-group">
+                {{ field(placeholder=field.label.text, class_="form-control") }}
             </div>
             {% endfor %}
-  
-        <button class="btn  btn-lg btn-block">Log In</button>
-      </form>
+          <button class="btn  btn-lg btn-block">Log In</button>
+        </form>
+      </div>
     </div>
-  </div>
 
 {% endblock%}

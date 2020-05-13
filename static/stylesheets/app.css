@@ -1,3 +1,13 @@
+body{
+  padding: 80px;
+  background-image: url('/static/images/back2-70%.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  font-family: 'Montserrat', sans-serif;
+}
+
 .card-img-overlay {
     position:absolute;
     top:0;
@@ -28,10 +38,8 @@
   
   .nearCard:hover{
     transform: scale(1.05);
-    /* opacity: 0.8; */
   }
 
-  
 
   .hovereffect {
     width: 100%;
@@ -119,58 +127,46 @@
   }
 
 
-  body{
-    padding: 80px;
-    background-image: url('/static/images/back2-70%.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
-    font-family: 'Montserrat', sans-serif;
+
+  .navbar-custom{ 
+      color:#FD8C8D !important;
   }
 
+  .navbar{
+    text-transform: uppercase;
+  }
 
-.navbar-custom{ 
-    color:#FD8C8D !important;
-}
+  .custom{
+    background-color:#FD8C8D !important;
+    color: white;
+    outline:none;
+    
+  }
+  .custom:hover{
+    color:white;
+  }
 
-.navbar{
-  text-transform: uppercase;
-}
+  .btn, 
+  .btn:hover {
+      color: #FD8C8D;
+      background-color: transparent;
+      border-color: #FD8C8D;
+  }
+  .btn:active,
+  .btn:focus {
+      color: #FD8C8D;
+      background-color: transparent !important;
+      border-color: #FD8C8D !important;
+      box-shadow: none; 
+  }
+  .saved{
+    opacity:0.7;
+  }
 
-.custom{
-  background-color:#FD8C8D !important;
-  color: white;
-  outline:none;
-  
-}
-.custom:hover{
-  color:white;
-}
+  .nearCard:hover{
+    opacity:0.7
+  }
 
-.btn, 
-.btn:hover {
-    color: #FD8C8D;
-    background-color: white;
-    border-color: #FD8C8D;
-}
-.btn:active,
-.btn:focus {
-    color: #FD8C8D;
-    background-color: white !important;
-    border-color: #FD8C8D !important;
-    box-shadow: none; 
-}
-.saved{
-  opacity:0.7;
-}
-
-.nearCard:hover{
-  opacity:0.7
-}
-
-
-/* Spinner  */
 
   .roulette{
     text-align: center;
@@ -212,12 +208,26 @@
     background: #ccc;
 }
 
-.second {
-    width: 100%;
-    height: 1000px;
-    background: #999;
-}
+  .second {
+      width: 100%;
+      height: 1000px;
+      background: #999;
+  }
 
-#header{
-  font-size: 4.9vw;
-}
+  #header{
+    font-size: 4.2vw;
+  }
+
+  .nearTitle{
+    border-color:#FD8C8D;
+    margin: 20px;
+    color: #FD8C8D;
+    text-transform: uppercase;
+  }
+
+  #user_location{
+    max-width: 500px;
+    text-align: center;
+    
+  }
+
