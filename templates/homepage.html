@@ -2,17 +2,22 @@
 {% block title%} Restaurant Roulette {% endblock %}
 {% block content %}
 
-  <div class="title container">
+  <div class="title shadow container text-center mt-4 p-3">
     <h2 class="display-4 text-center" id="header" "> Can't decide where to eat? </h2>
+    <p>Spin for a nearby restaurant<br>
+    Choose the type of cuisine, price range, and distance to get a result<br>
+    Choose the restaurants that appeals to you and we will choose one for you!<br>
+    To save your results sign up/log in
+    </p>
   </div>
   <div class="results-section d-flex justify-content-center"></div>
     <div class="roulette container">
         <p class="fas fa-sort-down fa-5x" id="arrow"></p><br>
         <img src="static/images/wheel.png" class="wheel" style="max-width:400px;"><br><br>
-        <button class="btn" id="btn-spin">Spin</button>
+        <button class="btn shadow" id="btn-spin">Spin</button>
           <div class=" my-4 buttons">
-            <a class="btn ml-2"  href="{{ url_for('set_pref') }}">Set preferences</a><br><br>
-             <button class="btn" id="getNearby">Make your own list</button>
+            <a class="btn shadow ml-2"  href="{{ url_for('set_pref') }}">Set preferences</a><br><br>
+             <button class="btn shadow" id="getNearby">Make your own list</button>
           </div>
         </div>
       </div>
@@ -29,7 +34,7 @@
         <label for="city">Enter City or Zip Code</label>
         <input type="text" name="address" id="city" class="form-control">
       </div>
-      <button class="btn" type="submit">Submit</button>
+      <button class="btn shadow" type="submit">Submit</button>
     </form>
 
 

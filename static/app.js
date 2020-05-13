@@ -420,7 +420,7 @@ function renderHTML(resp){
     </div>
     <div class="row">
     <div class="col my-3 d-flex justify-content-center">
-    <a href="/" class="btn">Home Page</a>
+    <a href="/" class="btn shadow">Home Page</a>
     </div>
 `
 }
