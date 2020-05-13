@@ -360,7 +360,6 @@ def get_location(address):
 
     response = requests.request("GET", url, data = payload)
     data = response.json()
-    print(data)
     lat = data['results'][0]['locations'][0]['latLng']['lat']
     lon = data['results'][0]['locations'][0]['latLng']['lng']
     result = {

@@ -158,7 +158,6 @@ async function removeFav(res_id){
 }
 
 // Getting a list of nearby restaurants and rendering a picked restaurant
-
 $('.buttons').on('click', '#getNearby', async function(evt){
     evt.preventDefault()
     let resp = await axios.get(`${BASE_URL}/nearbyRes`)
@@ -257,7 +256,6 @@ async function sendRes(res){
 }
 
 // Render a single result wwhen wheel is clicked
-
 $('.roulette').on('click', "#btn-spin", async function(evt){
     evt.preventDefault()
     $('.wheel').addClass('rotate')
@@ -285,6 +283,7 @@ $('.roulette').on('click', "#btn-spin", async function(evt){
         $('.buttons').hide()
         $('.title').hide()
         $('#user_location').hide()
+        $('#messages').hide()
         let htmlres = $(renderHTML(result))
         $('.results-section').append(htmlres)
         if(username.length == 0){
@@ -319,8 +318,10 @@ function charToNum(char){
         return 2
     }else if(char == '$$$'){
         return 3
-    }else{
+    }else if(char == '$$$$'){
         return 4
+    }else{
+        return 'n/a'
     }
 }
 
@@ -331,8 +332,10 @@ function numToChar(num){
         return "$$"
     }else if(num == 3){
         return "$$$"
-    }else{
+    }else if(num == 4){
         return "$$$$"
+    }else{
+        return 'n/a'
     }
 }
 
@@ -361,7 +364,7 @@ function nearbyHTML(resp){
         <h5 class="card-title" id="name" data-name=${resp.name}>${resp.name}</h5>
         <p class="card-text" id='res' data-res=${res}>${res} ${star}</p>
         <p class="card-text" id="rev" data-revcount=${resp.review_count} >${resp.review_count} reviews </p>
-        <p class="card-text" id="price" data-price=${resp.price} >${resp.price}</p>
+        <p class="card-text" id="price" data-price=${resp.price} >${resp.price || 'n/a'}</p>
       </div>
     </div>
     </div>
@@ -383,7 +386,7 @@ function randomPicked(resp){
         <h5 class="card-title" id="name" data-name=${resp.name}>${resp.name}</h5>
         <p class="card-text" id='res' data-res=${res}>${res} ${star}</p>
         <p class="card-text" id="rev" data-revcount=${resp.review_count} >${resp.review_count} reviews </p>
-        <p class="card-text" id="price" data-price=${resp.price} >${price}</p>
+        <p class="card-text" id="price" data-price=${resp.price} >${price || 'n/a'}</p>
         <i class="fa fa-yelp" style="color:red" aria-hidden="true"></i>
         <a href="${resp.url}" class="card-link text-danger">More Info</a>
         <p class="card-text"><small class="text">Powered by Yelp</small></p>
@@ -412,7 +415,7 @@ function renderHTML(resp){
             <path fill-rule="evenodd" d="M11 1H5a1 1 0 00-1 1v12a1 1 0 001 1h6a1 1 0 001-1V2a1 1 0 00-1-1zM5 0a2 2 0 00-2 2v12a2 2 0 002 2h6a2 2 0 002-2V2a2 2 0 00-2-2H5z" clip-rule="evenodd"/>
             <path fill-rule="evenodd" d="M8 14a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
           </svg>${resp[0].phone}</p>
-        <p class="card-text">${resp[0].price}</p>
+        <p class="card-text">${resp[0].price || 'n/a'}</p>
         <i class="fa fa-yelp" style="color:red" aria-hidden="true"></i>
         <a href="${resp[0].url}" class="card-link text-danger">More Info</a><br>
         <p class="card-text"><small class="text">Powered by Yelp</small></p>
