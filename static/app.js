@@ -7,6 +7,7 @@ let username = []
 let resInfo = {}
 let userFav = []
 
+
 //location function
 async function init(){
     savedRes = []
@@ -17,6 +18,8 @@ async function init(){
    
   let lat = localStorage.getItem('lat')
   let lon = localStorage.getItem('lon')
+ 
+  
     if(!lat && !lon){
         navigator.geolocation.getCurrentPosition(function(position){
             let lat = position.coords.latitude;
@@ -36,8 +39,6 @@ $('#user_location').submit(async function(evt){
     evt.preventDefault()
     let city = $('#city').val()
     document.querySelector('#city').value=""
-    $('#messages').removeClass('hide')
-    $('#messages').append(`<small class="text-muted">Location Added!</small>`);
     let res = await axios.get(`${BASE_URL}/getloc/${city}`)
     let data = res['data']
     let lat = data['lat']
@@ -46,11 +47,7 @@ $('#user_location').submit(async function(evt){
     localStorage.removeItem('lon')
     localStorage.setItem('lat', lat)
     localStorage.setItem('lon', lon)
-    let location ={
-        'lat': lat,
-        'lon': lon
-    }
-    sendLoc(location)
+    getCity()
 })
 
 
@@ -73,7 +70,11 @@ async function sendLoc(location){
 }
 
 
-
+async function getCity(){
+    let res = await axios.get(`${BASE_URL}/citysess`)
+    let city = res.data['city']
+    $('.set_location').replaceWith(` <p>Your location currently set to ${city}</p>`)
+}
 async function getUser(){
     let user = await axios.get(`${BASE_URL}/checkuser`)
     if(user.data['Error']){
@@ -108,7 +109,6 @@ $('.resultsDiv').on('click',"#res-id", async function(evt){
         const res = await axios.get(`${BASE_URL}/user/add_fav/`)
     }
 })
-
 
 
 $('.results-section').on('click',"#res-id", async function(evt){
@@ -205,7 +205,6 @@ function getRandomID(ID){
     }
 }
 
-
 $('.nearbyRes').on('click',".saveBtn", async function(evt){
     evt.preventDefault()
     let id = getRandomID(clickedID)
@@ -214,7 +213,6 @@ $('.nearbyRes').on('click',".saveBtn", async function(evt){
         return e.id == result 
     })
     if(username.length > 0){
-
         await getFav()
     }
   
@@ -271,8 +269,8 @@ $('.roulette').on('click', "#btn-spin", async function(evt){
         'review_count': resp.data[0].review_count,
         'url': resp.data[0].url
     }
-    await getUser()
-    if(username.length > 0){
+        await getUser()
+        if(username.length > 0){
         await getFav()
     }
  
@@ -283,7 +281,6 @@ $('.roulette').on('click', "#btn-spin", async function(evt){
         $('.buttons').hide()
         $('.title').hide()
         $('#user_location').hide()
-        $('#messages').hide()
         let htmlres = $(renderHTML(result))
         $('.results-section').append(htmlres)
         if(username.length == 0){

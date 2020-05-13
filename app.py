@@ -313,7 +313,6 @@ def serialize(self):
             "username": self.username,
         }
 
-
 @app.route('/users/login', methods=["GET", "POST"])
 def login():
     """Log in user"""
@@ -343,11 +342,10 @@ def logout():
 def get_user_location():
     """Get user's location and save to session"""
     data = request.get_json()
-    if 'latitude' in session:
-        session.pop('latitude')
-        session.pop('longitude')
     session['latitude'] = data['lat']
     session['longitude'] = data['lon']
+    get_city(session['latitude'], session['longitude'])
+
     return jsonify(data)
 
 @app.route('/getloc/<string:address>', methods=["GET", "POST"])
@@ -365,7 +363,33 @@ def get_location(address):
         'lat': lat,
         'lon': lon
     }
+    session['latitude'] = lat
+    session['longitude'] = lon
+    get_city(session['latitude'], session['longitude'])
+
     return jsonify(result)
+
+@app.route('/getCity', methods=['GET'])
+def get_city(lat,lng):
+    """Reverse geolookup"""
+    url = f"http://www.mapquestapi.com/geocoding/v1/reverse?key={MAP_KEY}"
+    
+    params={
+        'lat': lat,
+        'lng': lng
+    }
+    
+    resp = requests.get(url, params=params)
+    location = resp.json()
+    city = location['results'][0]['locations'][0]['adminArea5']
+    session['city'] = city
+    return jsonify(location)
+
+@app.route('/citysess', methods=['GET', "POST"])
+def render_city():
+    if 'city' in session:
+        data = {'city': session['city']}
+        return jsonify(data)
 
 ######Log in and homepage########
 
@@ -389,10 +413,10 @@ def do_logout():
         del session[CURR_USER_KEY]
 
 
-
 @app.route('/', methods=["GET", 'POST'])
 def home_page():
     """Show homepage"""
+    session.permanent = True
     return render_template('homepage.html')
    
 @app.after_request

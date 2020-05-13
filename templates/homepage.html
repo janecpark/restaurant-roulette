@@ -4,7 +4,7 @@
 
   <div class="title shadow container text-center mt-4 p-3">
     <h2 class="display-4 text-center" id="header" "> Can't decide where to eat? </h2>
-    <p>Spin for a nearby restaurant<br>
+    <p class="header-text">Spin for a nearby restaurant<br>
     Choose the type of cuisine, price range, and distance to get a result<br>
     Choose the restaurants that appeals to you and we will choose one for you!<br>
     To save your results sign up/log in
@@ -30,6 +30,9 @@
      <div id="messages" class="hide text-center" role="alert">
     </div> 
     <form action="" id="user_location" class="container form-group">
+      {% if session['city'] %}
+      <p class="set_location">Your location currently set to {{ session['city']}}</p>
+      {% endif %}
       <div class="form-group">
         <label for="city">Enter City or Zip Code</label>
         <input type="text" name="address" id="city" class="form-control">

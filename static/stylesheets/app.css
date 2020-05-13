@@ -218,6 +218,10 @@ body{
     font-size: 4.2vw;
   }
 
+  .header-text{
+    font-size: 1.5vw;
+  }
+
   .nearTitle{
     border-color:#FD8C8D;
     margin: 20px;
