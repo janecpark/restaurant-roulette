@@ -15,24 +15,29 @@ async function init(){
     username = []
     resInfo = {}
     getUser()
-   
+    serverSess()
+  
+    
   let lat = localStorage.getItem('lat')
   let lon = localStorage.getItem('lon')
- 
   
     if(!lat && !lon){
-        navigator.geolocation.getCurrentPosition(function(position){
-            let lat = position.coords.latitude;
-            let lon = position.coords.longitude
-            let location ={
-                'lat': lat,
-                'lon': lon
-            }
-            localStorage.setItem('lat', lat)
-            localStorage.setItem('lon', lon)
-            sendLoc(location)
-        })
+      geoLocation()
     }
+}
+
+function geoLocation(){
+    navigator.geolocation.getCurrentPosition(function(position){
+        let lat = position.coords.latitude;
+        let lon = position.coords.longitude
+        let location ={
+            'lat': lat,
+            'lon': lon
+        }
+        localStorage.setItem('lat', lat)
+        localStorage.setItem('lon', lon)
+        sendLoc(location)
+    })
 }
 
 $('#user_location').submit(async function(evt){
@@ -50,6 +55,12 @@ $('#user_location').submit(async function(evt){
     getCity()
 })
 
+async function serverSess(){
+    let resp = await axios.get(`${BASE_URL}/checksess`)
+    if(resp.data['error']){
+        geoLocation()
+    }
+}
 
 async function sendLoc(location){
     let myHeaders = new Headers();

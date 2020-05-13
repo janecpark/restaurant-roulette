@@ -390,6 +390,14 @@ def render_city():
     if 'city' in session:
         data = {'city': session['city']}
         return jsonify(data)
+        
+@app.route('/checksess', methods=['GET'])
+def render_session():
+    if 'latitude' in session:
+        data = {'lat': session['latitude'], 'lon': session['longitude']}
+    else:
+        data = {'error': 'no session found'}
+    return jsonify(data)
 
 ######Log in and homepage########
 
