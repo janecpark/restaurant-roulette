@@ -3,3 +3,4 @@ yelpAPI.py
 __pycache__/
 .env
 .appOOP.js
+.results.js
