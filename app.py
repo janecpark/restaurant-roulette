@@ -38,13 +38,13 @@ def get_result(num):
 
     HEADERS = {'Authorization': f'bearer {API_KEY}'}
     payload = {}
-
     PARAMS = {'term': 'restaurant',
-              'limit': num,
-              'latitude': session['latitude'],
-              'longitude': session['longitude'],
-              'open_now': True,
-              'offset': num}
+            'limit': num,
+            'latitude': session['latitude'],
+            'longitude': session['longitude'],
+            'open_now': True,
+            'offset': random.randint(0, 100)
+            }
 
     resp = requests.request("GET", BASE_URL, params=PARAMS, headers = HEADERS, data = payload)
         
@@ -68,8 +68,7 @@ def get_result_pref(cuisine,price,distance):
               'limit': 1,
               'latitude': session['latitude'],
               'longitude': session['longitude'],
-              'open_now': True,
-              'offset': 2,
+              'offset': random.randint(0, 100),
               'distance': distance,
               'categories': cuisine,
               'price': price }
