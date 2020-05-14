@@ -84,7 +84,7 @@ async function sendLoc(location){
 async function getCity(){
     let res = await axios.get(`${BASE_URL}/citysess`)
     let city = res.data['city']
-    $('.set_location').replaceWith(` <p>Your location currently set to ${city}</p>`)
+    $('.set_location').replaceWith(` <p>Your location is currently set to ${city}</p>`)
 }
 async function getUser(){
     let user = await axios.get(`${BASE_URL}/checkuser`)
