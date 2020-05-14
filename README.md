@@ -1,4 +1,4 @@
-#Restaurant Roulette
+# Restaurant Roulette
 
 https://restaurant-roulette-v1.herokuapp.com/
 
@@ -15,7 +15,7 @@ User is able to sign up and log in to save results
 
 
 
-###Tech used:
+### Tech used:
 - JavaScript
 - Python
 - Flask
@@ -26,10 +26,6 @@ User is able to sign up and log in to save results
 - Bootstrap
 
 
-###API used:
+### API used:
 - https://api.yelp.com/v3
 - http://www.mapquestapi.com/geocoding/v1/
-
-### DEMO
-
-<a href="https://imgflip.com/gif/41cl31">via Imgflip</a></p></div>
