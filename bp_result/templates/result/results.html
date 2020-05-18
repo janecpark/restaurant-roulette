@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="text-center my-3">
+    <div class=" d-flex justify-content-center my-3">
+        {% for resp in response %}
+        <div class="card shadow" style="width: 18rem;">
+            <img src="{{resp['image_url']}}" class="card-img-top" alt="...">
+            <div class="card-body">
+            <h5 class="card-title">{{resp['name']}}</h5>
+            <p class="card-text">{{resp['rev_num']}} reviews </p>
+            <p class="card-text">Contact: {{resp['phone']}}</p>
+            <p class="card-text">{{resp['price']}}</p>
+            <i class="fa fa-yelp" style="color:red" aria-hidden="true"></i>
+            <a href="{{resp['url']}}" class="card-link text-danger">More Info</a>
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+        <a href="/" class="btn">Home Page</a>
+    </div>
+
+
+{% endblock %}

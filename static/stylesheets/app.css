@@ -1,12 +1,49 @@
 body{
-  padding: 80px;
-  background-image: url('/static/images/back2-70%.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-attachment: fixed;
+  padding-top: 65px;
   font-family: 'Montserrat', sans-serif;
 }
+
+.content-banner{
+  padding-top: 50px;
+  background-image: url('/static/images/background3.jpg');
+  background-repeat: no-repeat;
+  height: 90vh;
+  width: 100vw; 
+  background-size: cover;
+  
+}
+
+
+
+.center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.quick-search {
+  width: 900px;
+}
+
+.icon{
+  background-color:transparent;
+  width: 120px;
+  padding: 30px;
+  margin-bottom: 5px;
+  border-color: #1A7E9F;
+  transition: transform .1s ease;
+
+  
+}
+
+.icon:hover{
+  cursor: pointer; 
+}
+
+.quick-search p{
+  font-size: 16px;
+}
+
 
 .card-img-overlay {
     position:absolute;
@@ -28,7 +65,7 @@ body{
     transition: transform .1s ease;
   }
   
-  .favcard:hover, button:hover, .btn:hover{
+  .favcard:hover, button:hover, .icon:hover, .btn:hover{
     transform: scale(1.05);
   }
 
@@ -129,7 +166,7 @@ body{
 
 
   .navbar-custom{ 
-      color:#FD8C8D !important;
+      color:#1A7E9F !important;
   }
 
   .navbar{
@@ -137,7 +174,7 @@ body{
   }
 
   .custom{
-    background-color:#FD8C8D !important;
+    background-color:#1A7E9F !important;
     color: white;
     outline:none;
     
@@ -148,15 +185,16 @@ body{
 
   .btn, 
   .btn:hover {
-      color: #FD8C8D;
-      background-color: transparent;
-      border-color: #FD8C8D;
+      background-color: #1A7E9F;
+      color: white;
+      cursor: pointer;
   }
+
   .btn:active,
   .btn:focus {
-      color: #FD8C8D;
-      background-color: transparent !important;
-      border-color: #FD8C8D !important;
+      background-color: #1A7E9F;
+      color: white !important;
+      border-color:#1A7E9F !important;
       box-shadow: none; 
   }
   .saved{
@@ -168,38 +206,11 @@ body{
   }
 
 
-  .roulette{
-    text-align: center;
-   
-  }
-  
-  .wheel{
-    width: 100%;
-    height:auto;
-
-    
-  }
-  #arrow{
-   color : #FD8C8D;
-  }
-
   .btn-primary.custom-btn{
-    background-color: #FD8C8D;
+    background-color: #1A7E9F;
     border: none;
   }
 
-  .rotate {
-    animation: rotation 0.5s linear;
-  }
-  
-  @keyframes rotation {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(359deg);
-    }
-  }
 
 
   .first {
@@ -218,14 +229,13 @@ body{
     font-size: 4.2vw;
   }
 
-  .header-text{
-    /* font-size: 1.8vw; */
-  }
+  
+ 
 
   .nearTitle{
-    border-color:#FD8C8D;
+    border-color:#1A7E9F;
     margin: 20px;
-    color: #FD8C8D;
+    color: #1A7E9F;
     text-transform: uppercase;
   }
 
@@ -235,3 +245,9 @@ body{
     
   }
 
+  .copyright {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 20px 0 0 0;
+}
