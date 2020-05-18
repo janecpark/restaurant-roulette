@@ -15,14 +15,13 @@ body{
 
 
 
-.center-block {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+.quick-search {
+  max-width: 900px;
 }
 
-.quick-search {
-  width: 900px;
+.quick-search img {
+  display:block;
+  margin:auto;
 }
 
 .icon{
