@@ -50,6 +50,7 @@ def get_cuisine():
         return jsonify(response)
 
     else:
+        flash('No results try again!', 'danger')
         return jsonify({'result': 'error'})
             
 
