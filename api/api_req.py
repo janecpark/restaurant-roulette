@@ -1,7 +1,6 @@
 import os
 from flask import Flask, render_template, request, flash, redirect, session, url_for, g, jsonify, Blueprint
 from models import db, connect_db, User, Restaurant, Favorite
-# from bp_result.result import pop_session
 import requests
 import random
 import json
@@ -26,7 +25,6 @@ def get_result(num):
             'limit': num,
             'latitude': session['latitude'],
             'longitude': session['longitude'],
-            'open_now': True,
             'offset': random.randint(0, 100)
             }
 
@@ -60,6 +58,7 @@ def get_result_pref(cuisine,price,distance):
         return jsonify({'error': 'Invalid response'}),422
 
     data = resp.json()
+
     return data
 
 def get_location(address):

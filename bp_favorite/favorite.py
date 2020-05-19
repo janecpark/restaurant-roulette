@@ -40,7 +40,10 @@ def add_user_fav():
         fav = Favorite(user_id = current_user.id, rest_id = rest.id, rest_name = name)
       
         db.session.add(fav)
-        db.session.commit()   
+        db.session.commit()
+
+        
+           
         return res
 
 @fav.route('/favorites/<int:user_id>')

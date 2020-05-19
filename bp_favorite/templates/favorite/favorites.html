@@ -2,6 +2,7 @@
 {% block title %} Favorites {% endblock %}
 {% block content %}
 
+<h2 class="dispay-4 text-center mt-4" style="text-transform: uppercase;">{{ current_user.username }}'s Favorite Restaurants</h2>
 <div class="container">
 {% if not favs %}
 <div class="text-center alert alert-warning my-5 ">Favorites empty!</div>

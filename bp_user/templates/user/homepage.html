@@ -2,47 +2,50 @@
 {% block title%} Restaurant Roulette {% endblock %}
 {% block content %}
 
-<section class="content-banner"> 
-<div class="title text-center p-3">
+<section class="content-banner "> 
+<div class="title text-center p-3 mt-5">
   <h2 class="display-4  text-center" id="header" > Can't decide where to eat? </h2>
-  <form action="" id="user_location" class="container form-group mt-4" required>
-    {% if session['city'] %}
-    <p class="set_location">Your location is currently set to {{ session['city']}}</p>
-    {% endif %}
-    <div class="form-group">
-      <label for="city">Set Your Location</label><br>
-      <label for="city">Enter City or Zip Code</label>
-      <input type="text" name="address" id="city" class="form-control">
-    </div>
-    <button class="btn reverse-btn shadow" type="submit">Submit</button>
-  </form>
+ 
 </div>
 </section>
+
+<form action="" id="user_location" class="container form-group mt-4" required>
+  {% if session['city'] %}
+  <p class="set_location">Your location is currently set to {{ session['city']}}</p>
+  {% endif %}
+  <div class="form-group">
+    <label for="city">Set Your Location</label><br>
+    <label for="city">Enter City or Zip Code</label>
+    <input type="text" name="address" id="city" class="form-control">
+  </div>
+  <button class="btn reverse-btn shadow" type="submit">Submit</button>
+</form>
+
 
 <div class="quick-search container  my-5">
   <h4 class="display-6 text-center ">Quick Search</h4>
     <div class="row mt-4">
           <div class="cuisine-type col-12 col-md-6 col-lg-3">
             <div class="type-text" onclick="getRestaurant('asian'); this.onclick=null;">
-                  <img src="/static/images/icons/noodles.svg"/ class="img-thumbnail thumbnail icon shadow">
+                  <img src="/static/images/icons/asian.png"/ class="img-thumbnail thumbnail icon shadow">
                   <p class="text-center">Asian</p>
               </div>
           </div>
           <div class="cuisine-type col-12 col-md-6 col-lg-3">
               <div class="type-text" onclick="getRestaurant('mexican'); this.onclick=null;">
-                  <img src="/static/images/icons/taco.png" class="img-thumbnail thumbnail icon shadow">
+                  <img src="/static/images/icons/mexican.png" class="img-thumbnail thumbnail icon shadow">
                   <p class="text-center">Mexican</p>
               </div>
           </div>
           <div class="cuisine-type col-12 col-md-6 col-lg-3">
               <div class="type-text" onclick="getRestaurant('italian'); this.onclick=null;">
-                  <img src="/static/images/icons/spaghetti.svg" class="img-thumbnail thumbnail icon shadow">
+                  <img src="/static/images/icons/italian.png" class="img-thumbnail thumbnail icon shadow">
                   <p class="text-center">Italian</p>
               </div>
           </div>
           <div class="cuisine-type col-12 col-md-6 col-lg-3">
               <div class="type-text" onclick="getRestaurant('american'); this.onclick=null;">
-                  <img src="/static/images/icons/pizza.svg" class="img-thumbnail thumbnail icon shadow"/>
+                  <img src="/static/images/icons/american.png" class="img-thumbnail thumbnail icon shadow"/>
                   <p class="text-center">American</p>
               </div>
             </div>

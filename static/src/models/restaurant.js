@@ -32,20 +32,37 @@ async function removeFav(res_id){
     let remove = await axios.post(`${BASE_URL}/fav/delete/${res_id}`)
 }
 
-async function sendRes(res){
-    let myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    
-    let raw = JSON.stringify(res);
-    
-    let requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
-    
-    fetch(`${BASE_URL}/handleRes`, requestOptions)
-      .then(response => response.text())
-      .catch(error => console.log('error', error));
-}
+
+function getRestaurant(data){
+  $.ajax({
+      'type': 'POST',
+      'url': `${BASE_URL}/cuisine`,
+      'data': JSON.stringify(data),
+      'success': function(response)
+      {
+         window.location.href = `${BASE_URL}/result`;
+      },
+      'error': function()
+      {
+         console.log('Error');
+      }
+   });
+  }
+
+  function sendRes(res){
+    $.ajax({
+        'type': 'POST',
+        'url': `${BASE_URL}/handleRes`,
+        'data': JSON.stringify(res),
+        'contentType': "application/json; charset=utf-8",
+        'dataType': "json",
+        'success': function(response)
+        {
+           window.location.href = `${BASE_URL}/result`;
+        },
+        'error': function()
+        {
+           console.log('Error');
+        }
+     });
+    }

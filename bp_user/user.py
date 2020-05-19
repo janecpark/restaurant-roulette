@@ -40,7 +40,7 @@ def logout():
     logout_user()
 
     flash("Log Out Successful", 'success')
-    return render_template('user/logout.html')
+    return redirect('/login')
 
 @user.route('/signup', methods=['GET', 'POST'])
 def user_signup():

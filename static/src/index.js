@@ -2,7 +2,6 @@
 const BASE_URL = 'https://restaurant-roulette-v1.herokuapp.com'
 let savedRes = []
 let clickedID = []
-let username = []
 let resInfo = {}
 let userFav = []
 
@@ -11,7 +10,6 @@ async function init(){
     clickedID = []
     username = []
     resInfo = {}
-    getUser()
     serverSess()
     
   let lat = localStorage.getItem('lat')
@@ -43,15 +41,6 @@ async function serverSess(){
         geoLocation()
     }
 }
-
-async function getUser(){
-    let user = await axios.get(`${BASE_URL}/checkuser`)
-    if(user.data['Error']){
-        username = ''
-    }else{
-        username.push(user.data['username'])
-    }
-}   
 
 
 init()

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container pt-5">
+  <h5 class="display-4 text-center" id="name">{{session['name']}}</h5><br>
+  <div class="row d-flex justify-content-center">
+    <div class="column ml-4">
+      <img src="{{session['image_url']}}" id="res_id" data-id="{{session['id']}}" class="card-img-top img-fluid" alt="..." data-img="{{session['image_url']}}">
+    </div>
+      <div class="column ml-4">
+        {% if session['rating'] == 0 %}
+        <img src="/static/images/yelp_stars/web_and_ios/large/large_0.png" alt="">
+        {% elif session['rating'] == 1 %}
+        <img src="/static/images/yelp_stars/web_and_ios/large/large_1.png" alt="">
+        {% elif session[rating] == 1.5 %}
+        <img src="/static/images/yelp_stars/web_and_ios/large/large_1_half.png" alt=""> 
+        {% elif session['rating'] == 2 %}
+        <img src="/static/images/yelp_stars/web_and_ios/large/large_2.png" alt=""> 
+        {% elif session['rating'] == 2.5 %}
+        <img src="/static/images/yelp_stars/web_and_ios/large/large_2_half.png" alt="">
+        {% elif session['rating'] == 3%}
+        <img src="/static/images/yelp_stars/web_and_ios/large/large_3.png" alt="">
+        {% elif session['rating'] == 3.5 %}
+        <img src="/static/images/yelp_stars/web_and_ios/large/large_3_half.png" alt="">
+        {% elif session['rating'] == 4 %}
+        <img src="/static/images/yelp_stars/web_and_ios/large/large_4.png" alt="">
+        {% elif session['rating'] == 4.5 %}
+        <img src="/static/images/yelp_stars/web_and_ios/large/large_4_half.png" alt="">
+        {% else %}
+        <img src="/static/images/yelp_stars/web_and_ios/large/large_5.png" alt="">
+        {% endif %}
+        <p class="card-text" id="rev"> {{session['rev_num']}}reviews </p>
+        <p class="card-text" id="price">{{session['price_range']}}</p>
+        <p class="card-text">{{session['address']}}, {{session['city']}} {{session['state']}}, {{session['zipcode']}}</p>
+        <i class="fa fa-yelp" style="color:red" aria-hidden="true"></i>
+        <a href="{{session['url']}}" class="card-link text-danger">More Info</a>
+        <p class="card-text"><small class="text">Powered by Yelp</small></p>
+      </div>
+  </div>
+      <div class="resultsDiv d-flex justify-content-center mb-5 mt-5">
+        <a class="btn shadow" href="{{ url_for('user.home_page')}}"> Home Page</a>
+          {% if (session['name'] != favres.rest_name) and (current_user.is_authenticated) %}
+            <a href="" data-id="{{session['name']}}"  class="btn ml-2 addfav res-id" >Add Favorite</a>
+            {% elif (session['name'] == favres.rest_name) and (current_user.is_authenticated) %}  
+            <a href="" data-id="{{session['name']}}" class="btn ml-2 removefav res-id">Remove Favorite</a>
+      </div> 
+  {%endif%}
+
+{% endblock %}

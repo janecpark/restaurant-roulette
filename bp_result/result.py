@@ -13,11 +13,15 @@ def add_to_session(response):
     session['id'] = response[0]['id']
     session['name'] = response[0]['name']
     session['rating'] = response[0]['rating']
-    session['price_range'] = 'N/A' or response[0]['price'] 
+    session['price_range'] = response[0]['price'] or 'n/a'
     session['image_url'] = response[0]['image_url'] 
     session['url'] = response[0]['url']
     session['phone'] = response[0]['phone']
     session['rev_num'] = response[0]['review_count']
+    session['address'] = response[0]['location']['address1']
+    session['city'] = response[0]['location']['city']
+    session['state'] = response[0]['location']['state']
+    session['zipcode'] = response[0]['location']['zip_code']
     
 def pop_session():
     session.pop('name')
@@ -27,29 +31,38 @@ def pop_session():
     session.pop('image_url')
     session.pop('url')
     session.pop('phone')
-    session.pop('rev_num')
+    session.pop('address')
+    session.pop('city')
+    session.pop('state')
+    session.pop('zipcode')
 
-@result.route('/spin', methods=['GET', 'POST'])
-def lucky_spin():
-    """Post and render response"""
+
+@result.route('/cuisine', methods=["GET", "POST"])
+def get_cuisine():
     if 'name' in session:
         pop_session()
-    response = get_result(1)
-    add_to_session(response)
-    return jsonify(response)
+    data = request.get_json()
+    resp = get_result_pref(data, 1, 3000)
+    response = resp['businesses']
 
-@result.route('/cuisine/<string:cuisine>', methods=["GET"])
-def get_cuisine(cuisine):
-    if 'name' in session:
-        pop_session()
-
-    data = get_result_pref(cuisine, 1, 3000)
-    response = data['businesses']
-
-    if response and current_user.is_authenticated:
+    if response:
         add_to_session(response)
-    return jsonify(response)
-    
+        return jsonify(response)
+
+    else:
+        return jsonify({'result': 'error'})
+            
+
+@result.route('/result')
+def session_result():
+    name = session['name']
+    if current_user.is_authenticated:
+        user = User.query.get_or_404(current_user.id)
+        favres = Favorite.query.filter(Favorite.rest_name == name).filter(Favorite.user_id == user.id).first()
+    else:
+        favres = None
+
+    return render_template('/result/session-result.html', favres=favres)    
 
 @result.route('/nearbyRes', methods=["GET", "POST"])
 def nearby():
@@ -78,37 +91,29 @@ def set_pref():
         else:
             favres = None
     
-        return render_template('/result/userresult.html', response=response, favres=favres)
+        return render_template('/result/session-result.html', favres=favres)
 
     return render_template('/result/preferences.html')
 
-    
-
-@result.route('/handleRes', methods=['POST'])        
+@result.route('/handleRes', methods=["GET", 'POST'])        
 def handle_result():
     """Route to handle result and add to session"""
-    data = request.get_json()
-    obj = json.loads(data)
-
-    res_id = obj['id']
-    name = obj['name']
-    image_url = obj['image_url']
-    rating = obj['rating']
-    phone = obj['phone']
-    review_count = obj['review_count']
-    price = obj['price']
-    url = obj['url']
+    obj = request.get_json()
 
     if 'name' in session:
         pop_session()
 
-    session['id'] = res_id
-    session['name'] = name
-    session['rating'] = rating
-    session['price_range'] = price
-    session['image_url'] = image_url
-    session['url'] = url
-    session['phone'] = phone
-    session['rev_num'] = review_count
+    session['id'] = obj['id']
+    session['name'] = obj['name']
+    session['image_url'] = obj['image_url']
+    session['rating'] = obj['rating']
+    session['phone'] = obj['phone']
+    session['rev_num'] = obj['review_count']
+    session['price_range'] = obj['price']
+    session['url'] = obj['url']
+    session['address'] = obj['address']
+    session['city'] = obj['city']
+    session['state'] = obj['state']
+    session['zipcode'] = obj['zip_code']
 
     return jsonify({'result': 'success'})
