@@ -5,7 +5,6 @@ $('.card').on('click',"#fav-id", async function(evt){
     const fav = evt.target.getAttribute('data-id')
     $(this).toggleClass('fas far')
     await axios.post(`${BASE_URL}/fav/delete/${fav}`)
-   
 })
 
 $('.resultsDiv').on('click',".res-id", async function(evt){
