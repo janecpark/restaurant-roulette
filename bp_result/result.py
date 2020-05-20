@@ -45,7 +45,7 @@ def get_cuisine():
         if 'name' in session:
             pop_session()
         data = request.get_json()
-        resp = get_result_pref(data, 5, 4000)
+        resp = get_result_pref(data, 1, 4000)
         response = resp['businesses']
 
         if response:
