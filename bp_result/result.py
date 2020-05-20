@@ -53,7 +53,8 @@ def get_cuisine():
             return jsonify(response)
 
     except:
-        return jsonify("Error:", "No Response")
+
+        return jsonify("Error No Response")
             
 
 @result.route('/result')
