@@ -41,9 +41,7 @@ def add_user_fav():
       
         db.session.add(fav)
         db.session.commit()
-
-        
-           
+      
         return res
 
 @fav.route('/favorites/<int:user_id>')
