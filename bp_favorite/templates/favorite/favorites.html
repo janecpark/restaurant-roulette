@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
-{% block title %} Favorites {% endblock %}
+{% block title %} Favorites{% endblock %}
 {% block content %}
 
-<h2 class="dispay-4 text-center mt-4" style="text-transform: uppercase;">{{ current_user.username }}'s Favorite Restaurants</h2>
-<div class="container">
+<h2 class="dispay-4 text-center mt-5" style="text-transform: uppercase; font-family: 'Playfair Display', serif;">{{ current_user.username }}'s Favorite Restaurants</h2>
+<div class="container my-5">
 {% if not favs %}
 <div class="text-center alert alert-warning my-5 ">Favorites empty!</div>
     {% endif %}
@@ -60,6 +60,7 @@
                 </div>
         {%endfor%}
     </div>
+    <!-- <a href="/" class="btn shadow text-center mb-5"> Home Page</a> -->
 </div>
 </div>
 

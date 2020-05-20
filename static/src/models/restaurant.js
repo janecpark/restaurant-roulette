@@ -38,6 +38,8 @@ function getRestaurant(data){
       'type': 'POST',
       'url': `${BASE_URL}/cuisine`,
       'data': JSON.stringify(data),
+      'contentType': "application/json; charset=utf-8",
+      'dataType': "json",
       'success': function(response)
       {
          window.location.href = `${BASE_URL}/result`;

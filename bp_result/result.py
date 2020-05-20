@@ -39,19 +39,20 @@ def pop_session():
 
 @result.route('/cuisine', methods=["GET", "POST"])
 def get_cuisine():
-    if 'name' in session:
-        pop_session()
-    data = request.get_json()
-    resp = get_result_pref(data, 1, 3000)
-    response = resp['businesses']
+    try:
+        if 'name' in session:
+            pop_session()
+        data = request.get_json()
+        resp = get_result_pref(data, 1, 4000)
+        response = resp['businesses']
 
-    if response:
-        add_to_session(response)
-        return jsonify(response)
+        if response:
+            add_to_session(response)
+            return jsonify(response)
 
-    else:
-        flash('No results try again!', 'danger')
-        return jsonify({'result': 'error'})
+    except:
+        flash('No result, try again', 'danger')
+        return redirect('/')
             
 
 @result.route('/result')

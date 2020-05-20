@@ -21,17 +21,17 @@ def get_result(num):
    
     HEADERS = {'Authorization': f'bearer {API_KEY}'}
     payload = {}
-    PARAMS = {'term': 'restaurant',
+    PARAMS = {'term': 'restaurants',
             'limit': num,
             'latitude': session['latitude'],
             'longitude': session['longitude'],
             'offset': random.randint(0, 100)
             }
 
-    resp = requests.request("GET", BASE_URL, params=PARAMS, headers = HEADERS, data = payload)
-        
-    if resp is None:
-        return jsonify({'error': 'Invalid response'}),422
+    try:
+        resp = requests.request("GET", BASE_URL, params=PARAMS, headers = HEADERS, data = payload)
+    except: 
+        return('bad request')
 
     data = resp.json()
     restaurants = data['businesses']
@@ -43,7 +43,7 @@ def get_result_pref(cuisine,price,distance):
     HEADERS = {'Authorization': f'bearer {API_KEY}'}
     payload = {}
 
-    PARAMS = {'term': 'restaurant',
+    PARAMS = {'term': 'restaurants',
               'limit': 1,
               'latitude': session['latitude'],
               'longitude': session['longitude'],
@@ -52,13 +52,12 @@ def get_result_pref(cuisine,price,distance):
               'categories': cuisine,
               'price': price}
 
-    resp = requests.request("GET", BASE_URL, params=PARAMS, headers = HEADERS, data = payload)
-        
-    if resp is None:
-        return jsonify({'error': 'Invalid response'}),422
+    try:            
+        resp = requests.request("GET", BASE_URL, params=PARAMS, headers = HEADERS, data = payload)
+    except: 
+        return('bad request')
 
     data = resp.json()
-
     return data
 
 def get_location(address):
@@ -67,7 +66,12 @@ def get_location(address):
 
     payload = {}
 
-    response = requests.request("GET", url, data = payload)
+    try:
+        response = requests.request("GET", url, data = payload)
+    
+    except: 
+        return('bad request')
+    
     data = response.json()
     return data
 
@@ -82,7 +86,12 @@ def get_city(lat,lng):
         'key': {MAP_KEY}
     }
     
-    resp = requests.get(url, params=params)
+    try:
+        resp = requests.get(url, params=params)
+
+    except: 
+        return('bad request')
+
     location = resp.json()
     city = location['results'][0]['locations'][0]['adminArea5']
     session['city'] = city

@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
+{% block title %} Results {% endblock %}
 {% block content %}
 
 <div class="container pt-5">
-  <h5 class="display-4 text-center" id="name">{{session['name']}}</h5><br>
+  <h5 class="display-4 text-center" style="font-family: 'Playfair Display', serif;" id="name">{{session['name']}}</h5><br>
   <div class="row d-flex justify-content-center">
     <div class="column ml-4">
       <img src="{{session['image_url']}}" id="res_id" data-id="{{session['id']}}" class="card-img-top img-fluid" style="max-width: 500px; "alt="..." data-img="{{session['image_url']}}">

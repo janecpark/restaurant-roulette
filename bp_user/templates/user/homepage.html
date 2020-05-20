@@ -21,12 +21,17 @@
   <button class="btn reverse-btn shadow" type="submit">Submit</button>
 </form>
 
+<div class="container mt-3">
+  {% for category, message in get_flashed_messages(with_categories=True) %}
+  <div class="alert alert-{{ category }}">{{ message }}</div>
+  {% endfor %}
+  </div>
 
 <div class="quick-search container  my-5">
-  <h4 class="display-6 text-center ">Quick Search</h4>
+  <h4 class="display-6 text-center" style="font-family: 'Playfair Display', serif;">Quick Search</h4>
     <div class="row mt-4">
           <div class="cuisine-type col-12 col-md-6 col-lg-3">
-            <div class="type-text" onclick="getRestaurant('asian'); this.onclick=null;">
+            <div class="type-text" onclick="getRestaurant('asianfusion'); this.onclick=null;">
                   <img src="/static/images/icons/asian.png"/ class="img-thumbnail thumbnail icon shadow">
                   <p class="text-center">Asian</p>
               </div>
