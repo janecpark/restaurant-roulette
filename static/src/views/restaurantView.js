@@ -24,9 +24,10 @@ $('.resultsDiv').on('click',".res-id", async function(evt){
 
 $('.buttons').one('click', '#getNearby', async function(evt){
     evt.preventDefault()
-        let resp = axios.get(`${BASE_URL}/nearbyRes`)
-        resp.then(() => {
-            for(let res of resp.data){
+    
+        $.ajax(`${BASE_URL}/nearbyRes`, {
+       success: response => {
+            for(let res of response){
             let result = $(nearbyHTML(res))
             $('.results').append(result)
             savedRes.push({
@@ -45,14 +46,15 @@ $('.buttons').one('click', '#getNearby', async function(evt){
     
             })
         }
-            $('.btn-area').append('<div class="btn saveBtn mb-5">Done</div>')
-            hidePage()
-            $('.nearbyRes').prepend('<h5 class="display-4 text-center nearTitle" style="font-size: 2.9vw;">Choose at least 2 restaurants</h2>')
-    })
-
-        resp.catch(() => {
+        $('.btn-area').append('<div class="btn saveBtn mb-5">Done</div>')
+        hidePage()
+        $('.nearbyRes').prepend('<h5 class="display-4 text-center nearTitle" style="font-size: 2.9vw;">Choose at least 2 restaurants</h2>')
+    },
+    
+        error: error => {
         window.location.href = `${BASE_URL}/error`;
-    })
+    }
+})
 })
 
 
@@ -119,8 +121,8 @@ function nearbyHTML(resp){
       </div>
         <div class="card-body">
         <h5 class="card-title" id="name" data-name=${resp.name}>${resp.name}</h5>
-        <p class="card-text" id='res' data-res=${res}>${res} ${star}</p>
-        <p class="card-text" id="rev" data-revcount=${resp.review_count} >${resp.review_count} reviews </p>
+         <p class="card-text" id='res' data-res=${res}>${res} ${star}</p>
+        <p class="card-text" id="rev" data-revcount=${resp.review_count}>${resp.review_count} reviews </p>
         <p class="card-text" id="price" data-price=${resp.price} >${resp.price || 'n/a'}</p>
       </div>
     </div>
