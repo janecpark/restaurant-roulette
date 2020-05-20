@@ -70,7 +70,7 @@ def session_result():
     
     return render_template('/result/session-result.html', favres=favres)    
 
-@result.route('/nearbyRest', methods=["GET", "POST"])
+@result.route('/nearbyRes', methods=["GET", "POST"])
 def nearby():
     """Render response for nearby restaurants"""
     if 'name' in session:

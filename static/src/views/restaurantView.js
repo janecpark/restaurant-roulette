@@ -55,38 +55,6 @@ $('.buttons').one('click', '#getNearby', async function(evt){
     })
 })
 
-   
-// $('.buttons').one('click', '#getNearby', async function(evt){
-//     evt.preventDefault()
-//     try{
-//         let resp = await axios.get(`${BASE_URL}/nearbyRes`)
-//         for(let res of resp.data){
-//             let result = $(nearbyHTML(res))
-//             $('.results').append(result)
-//             savedRes.push({
-//                 id: res.id,
-//                 name: res.name,
-//                 image_url: res.image_url,
-//                 rating: res.rating,
-//                 phone: res.phone,
-//                 review_count: res.review_count,
-//                 price: res.price,
-//                 url: res.url,
-//                 address: res.location['address1'],
-//                 city: res.location['city'],
-//                 state: res.location['state'],
-//                 zip_code: res.location['zip_code'],
-    
-//             })
-//         }
-//         $('.btn-area').append('<div class="btn saveBtn mb-5">Done</div>')
-//         hidePage()
-//         $('.nearbyRes').prepend('<h5 class="display-4 text-center nearTitle" style="font-size: 2.9vw;">Choose at least 2 restaurants</h2>')
-        
-//     }catch(error){
-//         window.location.href = `${BASE_URL}/error`;
-//     }
-// })
 
 $('.nearbyRes').on('click', '.nearCard', function(evt){
     evt.preventDefault()
