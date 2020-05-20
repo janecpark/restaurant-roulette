@@ -5,7 +5,6 @@
 <section class="content-banner "> 
 <div class="title text-center p-3 mt-5">
   <h2 class="display-4  text-center" id="header" > Can't decide where to eat? </h2>
- 
 </div>
 </section>
 
@@ -21,13 +20,8 @@
   <button class="btn reverse-btn shadow" type="submit">Submit</button>
 </form>
 
-<div class="container mt-3">
-  {% for category, message in get_flashed_messages(with_categories=True) %}
-  <div class="alert alert-{{ category }}">{{ message }}</div>
-  {% endfor %}
-  </div>
-
-<div class="quick-search container  my-5">
+<div class="quick-search container my-5">
+  <span class="error-msg"></span>
   <h4 class="display-6 text-center" style="font-family: 'Playfair Display', serif;">Quick Search</h4>
     <div class="row mt-4">
           <div class="cuisine-type col-12 col-md-6 col-lg-3">

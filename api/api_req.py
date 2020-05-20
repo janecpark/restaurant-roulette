@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, flash, redirect, session, url_for, g, jsonify, Blueprint
+from flask import Flask, render_template, request, flash, redirect, session, url_for, g, jsonify, Blueprint, abort
 from models import db, connect_db, User, Restaurant, Favorite
 import requests
 import random
@@ -27,11 +27,11 @@ def get_result(num):
             'longitude': session['longitude'],
             'offset': random.randint(0, 100)
             }
-
     try:
         resp = requests.request("GET", BASE_URL, params=PARAMS, headers = HEADERS, data = payload)
+        
     except: 
-        return('bad request')
+        return ('bad request')
 
     data = resp.json()
     restaurants = data['businesses']
@@ -55,7 +55,7 @@ def get_result_pref(cuisine,price,distance):
     try:            
         resp = requests.request("GET", BASE_URL, params=PARAMS, headers = HEADERS, data = payload)
     except: 
-        return('bad request')
+        return ('bad request')
 
     data = resp.json()
     return data
@@ -70,7 +70,7 @@ def get_location(address):
         response = requests.request("GET", url, data = payload)
     
     except: 
-        return('bad request')
+        return ('bad request')
     
     data = response.json()
     return data

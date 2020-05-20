@@ -10,6 +10,7 @@ from bp_user.user import user
 from bp_favorite.favorite import fav
 from bp_location.location import location
 from bp_result.result import result
+from bp_error.error_handlers import error 
 
 
 app = Flask(__name__)
@@ -19,6 +20,7 @@ app.register_blueprint(user)
 app.register_blueprint(fav)
 app.register_blueprint(location)
 app.register_blueprint(result)
+app.register_blueprint(error)
 
 
 app.config['SQLALCHEMY_DATABASE_URI'] = (
@@ -41,4 +43,6 @@ login_manager.init_app(app)
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
+
+
 

@@ -32,7 +32,6 @@ async function removeFav(res_id){
     let remove = await axios.post(`${BASE_URL}/fav/delete/${res_id}`)
 }
 
-
 function getRestaurant(data){
   $.ajax({
       'type': 'POST',

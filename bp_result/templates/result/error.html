@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block body_class %}error-404{%endblock %}
+
+{% block content %}
+
+  <div class="error-msg container text-center mt-4">
+    <h3 class="m-4">No results! Try again</h3>
+    <a href="{{ url_for('user.home_page') }}" class="btn">Back</a>
+  </div>
+
+{% endblock %}

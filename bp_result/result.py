@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request, flash, redirect, session, url_for, g, jsonify, Blueprint, make_response
+from flask import Flask, render_template, request, flash, redirect, session, url_for, g, jsonify, Blueprint, make_response, abort
 from models import db, connect_db, User, Restaurant, Favorite
 from api.api_req import get_result, get_result_pref
+from bp_error.error_handlers import handle400
 from flask_login import login_required, login_user, current_user, logout_user
+
 import requests
 import random
 import json
@@ -43,7 +45,7 @@ def get_cuisine():
         if 'name' in session:
             pop_session()
         data = request.get_json()
-        resp = get_result_pref(data, 1, 4000)
+        resp = get_result_pref(data, 5, 4000)
         response = resp['businesses']
 
         if response:
@@ -51,22 +53,24 @@ def get_cuisine():
             return jsonify(response)
 
     except:
-        flash('No result, try again', 'danger')
-        return redirect('/')
+        return jsonify("Error:", "No Response")
             
 
 @result.route('/result')
 def session_result():
-    name = session['name']
-    if current_user.is_authenticated:
-        user = User.query.get_or_404(current_user.id)
-        favres = Favorite.query.filter(Favorite.rest_name == name).filter(Favorite.user_id == user.id).first()
+    if 'name' in session:
+        name = session['name']
+        if current_user.is_authenticated:
+            user = User.query.get_or_404(current_user.id)
+            favres = Favorite.query.filter(Favorite.rest_name == name).filter(Favorite.user_id == user.id).first()
+        else:
+            favres = None
     else:
         favres = None
-
+    
     return render_template('/result/session-result.html', favres=favres)    
 
-@result.route('/nearbyRes', methods=["GET", "POST"])
+@result.route('/nearbyRest', methods=["GET", "POST"])
 def nearby():
     """Render response for nearby restaurants"""
     if 'name' in session:
@@ -119,3 +123,7 @@ def handle_result():
     session['zipcode'] = obj['zip_code']
 
     return jsonify({'result': 'success'})
+
+@result.route('/error')
+def render_error():
+    return render_template('result/error.html')

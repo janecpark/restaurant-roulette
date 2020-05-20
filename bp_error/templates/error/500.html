@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block body_class %}error-404{%endblock %}
+
+{% block content %}
+
+<div class="message-400 container text-center mt-5">
+  <h1>An unexpected error has occurred</h1>
+  <p>Sorry for the inconvenience!</p>
+  <p class="m-3">
+  <a href="{{ url_for('user.home_page') }}" class="btn">Back</a>
+  </div>
+</div>
+
+{% endblock %}

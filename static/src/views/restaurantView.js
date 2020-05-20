@@ -51,7 +51,7 @@ $('.buttons').one('click', '#getNearby', async function(evt){
         $('.nearbyRes').prepend('<h5 class="display-4 text-center nearTitle" style="font-size: 2.9vw;">Choose at least 2 restaurants</h2>')
         
     }catch(error){
-        $('.quick-search').prepend('<div class="alert alert-danger" role="alert">No response, try again</div>')
+        window.location.href = `${BASE_URL}/error`;
     }
 })
 
