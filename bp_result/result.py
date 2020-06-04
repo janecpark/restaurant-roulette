@@ -24,6 +24,7 @@ def add_to_session(response):
     session['city'] = response[0]['location']['city']
     session['state'] = response[0]['location']['state']
     session['zipcode'] = response[0]['location']['zip_code']
+    session['type'] = response[0]['categories'][0]['alias']
     
 def pop_session():
     session.pop('name')
@@ -37,6 +38,7 @@ def pop_session():
     session.pop('city')
     session.pop('state')
     session.pop('zipcode')
+    session.pop('type')
 
 
 @result.route('/cuisine', methods=["GET", "POST"])
@@ -45,6 +47,7 @@ def get_cuisine():
         if 'name' in session:
             pop_session()
         data = request.get_json()
+        
         resp = get_result_pref(data, 1, 4000)
         response = resp['businesses']
 
@@ -116,12 +119,13 @@ def handle_result():
     session['rating'] = obj['rating']
     session['phone'] = obj['phone']
     session['rev_num'] = obj['review_count']
-    session['price_range'] = obj['price']
+    session['price_range'] = 'n/a' or obj['price'] 
     session['url'] = obj['url']
     session['address'] = obj['address']
     session['city'] = obj['city']
     session['state'] = obj['state']
     session['zipcode'] = obj['zip_code']
+    session['type'] = obj['type']
 
     return jsonify({'result': 'success'})
 

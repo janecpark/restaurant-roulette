@@ -32,11 +32,40 @@ async function removeFav(res_id){
     let remove = await axios.post(`${BASE_URL}/fav/delete/${res_id}`)
 }
 
+async function removeName(name){
+   await axios.post(`${BASE_URL}/fav/delete/${name}`)
+}
+
+async function addFav(){
+   await axios.get(`${BASE_URL}/add_fav/`)
+
+}
+
 function getRestaurant(data){
+
   $.ajax({
       'type': 'POST',
       'url': `${BASE_URL}/cuisine`,
       'data': JSON.stringify(data),
+      'contentType': "application/json; charset=utf-8",
+      'dataType': "json",
+      'success': function(response)
+      {
+         window.location.href = `${BASE_URL}/result`;
+      },
+      'error': function(response)
+      {
+         window.location.href = `${BASE_URL}/error`;
+      }
+   });
+  }
+
+
+function sendRes(res){
+   $.ajax({
+      'type': 'POST',
+      'url': `${BASE_URL}/handleRes`,
+      'data': JSON.stringify(res),
       'contentType': "application/json; charset=utf-8",
       'dataType': "json",
       'success': function(response)
@@ -48,22 +77,4 @@ function getRestaurant(data){
          console.log('Error');
       }
    });
-  }
-
-  function sendRes(res){
-    $.ajax({
-        'type': 'POST',
-        'url': `${BASE_URL}/handleRes`,
-        'data': JSON.stringify(res),
-        'contentType': "application/json; charset=utf-8",
-        'dataType': "json",
-        'success': function(response)
-        {
-           window.location.href = `${BASE_URL}/result`;
-        },
-        'error': function()
-        {
-           console.log('Error');
-        }
-     });
-    }
+   }

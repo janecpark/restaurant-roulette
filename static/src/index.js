@@ -14,6 +14,7 @@ async function init(){
     
   let lat = localStorage.getItem('lat')
   let lon = localStorage.getItem('lon')
+
   
     if(!lat && !lon){
       geoLocation()

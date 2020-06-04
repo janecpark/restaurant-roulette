@@ -2,5 +2,4 @@ venv/
 yelpAPI.py
 __pycache__/
 .env
-static/appOOP.js
-static/results.js
+node_modules

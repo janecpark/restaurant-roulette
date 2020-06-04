@@ -47,7 +47,7 @@ def get_result_pref(cuisine,price,distance):
               'limit': 1,
               'latitude': session['latitude'],
               'longitude': session['longitude'],
-              'offset': random.randint(0, 10),
+              'offset': random.randint(0, 20),
               'distance': distance,
               'categories': cuisine,
               'price': price}

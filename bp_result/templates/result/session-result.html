@@ -41,6 +41,9 @@
   </div>
       <div class="resultsDiv d-flex justify-content-center mb-5 mt-5">
         <a class="btn shadow" href="{{ url_for('user.home_page')}}"> Home Page</a>
+        <a class="btn shadow ml-2 redo-search" href="" data-type="{{session['type']}}">
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          <span class="sr-only">Searching...</span>Search Again</a>
           {% if (session['name'] != favres.rest_name) and (current_user.is_authenticated) %}
             <a href="" data-id="{{session['name']}}"  class="btn ml-2 addfav res-id" >Add Favorite</a>
             {% elif (session['name'] == favres.rest_name) and (current_user.is_authenticated) %}  

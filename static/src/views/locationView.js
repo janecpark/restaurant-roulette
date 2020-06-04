@@ -1,5 +1,6 @@
+const location = $('#user_location');
 
-$('#user_location').submit(async function(evt){
+location.submit(async function(evt){
     evt.preventDefault()
     let city = $('#city').val()
     if (city === "") {
