@@ -1,6 +1,6 @@
 # Restaurant Roulette
 
-https://restaurant-roulette-v1.herokuapp.com/
+http://restaurant-roulette-v1.herokuapp.com/
 
 
 The website helps users decide on a restaurant by using different methods. 
